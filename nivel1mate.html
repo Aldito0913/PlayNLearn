@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Sumas - Nivel 1</title>
+    <link rel="stylesheet" href="stylenvl1mate.css">
+</head>
+<body>
+    <header>
+        <h1>Juego de Sumas - Nivel 1</h1>
+        <p>Practica tus habilidades de suma. ¡Responde correctamente para ganar puntos y avanzar de nivel!</p>
+    </header>
+
+    <section class="game-container">
+        <h2>¿Cuánto es?</h2>
+        <div id="question"></div>
+        <input type="number" id="answer" placeholder="Escribe tu respuesta">
+        <button onclick="checkAnswer()">Enviar</button>
+        <div id="result"></div>
+        <p id="score">Puntuación: 0</p>
+        <p id="level">Nivel: 1</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        let score = 0;
+        let level = 1;
+        let questionCount = 0;
+        let currentQuestion;
+
+        function newQuestion() {
+            let maxNumber;
+            if (level === 1) {
+                maxNumber = 10;
+            } else if (level === 2) {
+                maxNumber = 20;
+            } else if (level === 3) {
+                maxNumber = 30;
+            } else if (level === 4) {
+                maxNumber = 40;
+            } else {
+                maxNumber = 50;
+            }
+
+            const num1 = Math.floor(Math.random() * maxNumber) + 1;
+            const num2 = Math.floor(Math.random() * maxNumber) + 1;
+            currentQuestion = { num1, num2, answer: num1 + num2 };
+            document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
+            document.getElementById('result').innerText = '';
+            document.getElementById('answer').value = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === currentQuestion.answer) {
+                score += 10;
+                resultElement.innerText = '¡Correcto! 🎉';
+                resultElement.classList.add('correct');
+                resultElement.classList.remove('incorrect');
+                questionCount++;
+
+                if (questionCount % 2 === 0) {
+                    level++;
+                    document.getElementById('level').innerText = `Nivel: ${level}`;
+                }
+
+                if (questionCount >= 8) {
+                    showCompletionModal();
+                    return;
+                }
+            } else {
+                resultElement.innerText = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
+                resultElement.classList.add('incorrect');
+                resultElement.classList.remove('correct');
+            }
+
+            document.getElementById('score').innerText = `Puntuación: ${score}`;
+
+            // Genera automáticamente una nueva pregunta después de un breve retraso
+            setTimeout(newQuestion, 1000); // Cambia de pregunta después de 1 segundo
+        }
+
+        function showCompletionModal() {
+            const modal = document.getElementById('completionModal');
+            modal.style.display = 'flex';
+            document.getElementById('finalScore').innerText = `¡Puntuación final: ${score}!`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('completionModal');
+            modal.style.display = 'none';
+            resetGame();
+        }
+
+        function resetGame() {
+            score = 0;
+            level = 1;
+            questionCount = 0;
+            document.getElementById('score').innerText = `Puntuación: ${score}`;
+            document.getElementById('level').innerText = `Nivel: ${level}`;
+            newQuestion();
+        }
+
+        window.onload = newQuestion;
+    </script>
+
+    <!-- Modal de finalización -->
+    <div id="completionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>¡Juego Completado!</h2>
+            <p id="finalScore"></p>
+            <button onclick="closeModal()">Reiniciar Juego</button>
+            <a href="matematicas.html" class="start-button" style="display: inline-block; margin-top: 10px; padding: 12px 20px; background-color: #ff5733; color: white; border: none; border-radius: 8px; font-size: 1em; text-decoration: none;">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdivinaLengua</title>
+    <link rel="stylesheet" href="styleadivina.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>¡Bienvenido a AdivinaLengua!</h1>
+            <p>¿Puedes adivinar la palabra correcta?</p>
+        </header>
+        
+        <section class="game-box">
+            <div class="word-box">
+                <p>Palabra oculta:</p>
+                <div class="word-letters"></div>
+            </div>
+            
+            <div class="hint-box">
+                <p><strong>Pista:</strong> <span class="hint-text">Esperando pista...</span></p>
+            </div>
+            
+            <div class="keyboard">
+                <div class="key-row">
+                    <button class="key">Q</button>
+                    <button class="key">W</button>
+                    <button class="key">E</button>
+                    <button class="key">R</button>
+                    <button class="key">T</button>
+                    <button class="key">Y</button>
+                    <button class="key">U</button>
+                    <button class="key">I</button>
+                    <button class="key">O</button>
+                    <button class="key">P</button>
+                </div>
+                <div class="key-row">
+                    <button class="key">A</button>
+                    <button class="key">S</button>
+                    <button class="key">D</button>
+                    <button class="key">F</button>
+                    <button class="key">G</button>
+                    <button class="key">H</button>
+                    <button class="key">J</button>
+                    <button class="key">K</button>
+                    <button class="key">L</button>
+                </div>
+                <div class="key-row">
+                    <button class="key">Z</button>
+                    <button class="key">X</button>
+                    <button class="key">C</button>
+                    <button class="key">V</button>
+                    <button class="key">B</button>
+                    <button class="key">N</button>
+                    <button class="key">M</button>
+                </div>
+            </div>
+            
+            <div class="feedback">
+                <p>¡Intenta adivinar una letra para descubrir la palabra!</p>
+            </div>
+
+            <!-- Botón para volver al inicio -->
+            <div class="back-button">
+                <button onclick="window.location.href='lenguaje.html'">Volver al Inicio</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="scriptadivina.js"></script> <!-- Conectar el archivo JavaScript -->
+</body>
+</html>
+

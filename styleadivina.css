@@ -1,0 +1,183 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFF8E1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('file:///home/usuario/Mis%20archivos/Archivos%20de%20Linux/PlayNLearn/Abrir/imagenes/patron%20de%20los%20niños-04.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.game-container {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 236, 179, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 2em;
+    color: #FFC107;
+}
+
+header p, .feedback p, .hint-box p {
+    color: #FF7043;
+}
+
+.word-box {
+    margin: 20px 0;
+}
+
+.word-letters span {
+    font-size: 1.5em;
+    margin: 0 5px;
+}
+
+.hint-box {
+    font-size: 1.1em;
+    color: #FF7043;
+    margin: 15px 0;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0;
+}
+
+.key {
+    background-color: #FFCC80;
+    border: 2px solid #FF8A65;
+    color: #FFF;
+    font-size: 1em;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.key.pressed {
+    background-color: #FF5722;
+    color: #FFF;
+}
+
+.key:disabled {
+    background-color: #BDBDBD;
+    color: #FFF;
+    cursor: not-allowed;
+}
+
+/* Responsividad para dispositivos móviles */
+@media screen and (max-width: 600px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .game-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .word-letters span {
+        font-size: 1.2em;
+        margin: 0 3px;
+    }
+
+    .keyboard {
+        margin-top: 15px;
+    }
+
+    .key-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .key {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9em;
+        margin: 3px;
+    }
+
+    .hint-box {
+        font-size: 1em;
+    }
+
+    .feedback p {
+        font-size: 0.9em;
+    }
+}
+
+/* Para tabletas (pantallas entre 600px y 900px) */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .game-container {
+        width: 80%;
+        padding: 20px;
+    }
+
+    .word-letters span {
+        font-size: 1.4em;
+        margin: 0 5px;
+    }
+
+    .keyboard {
+        margin-top: 20px;
+    }
+
+    .key-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .key {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+        margin: 3px;
+    }
+
+    .hint-box {
+        font-size: 1.1em;
+    }
+}
+
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button button {
+    padding: 12px 20px;
+    background-color: #FF5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.back-button button:hover {
+    background-color: #E64A19;
+    transform: scale(1.05);
+}

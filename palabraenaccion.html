@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juego interactivo para aprender expresiones comunes de El Salvador">
+    <title>Palabras en Acción</title>
+    <link rel="stylesheet" href="styleenaccion.css">
+</head>
+<body>
+    <header>
+        <h1>¡Palabras en Acción!</h1>
+        <p>Elige la frase adecuada para cada situación de El Salvador.</p>
+    </header>
+
+    <section class="game-container">
+        <div class="situation">
+            <h2>¿Qué dirías si tienes hambre?</h2>
+        </div>
+
+        <div class="options">
+            <button onclick="checkAnswer('correct')">¡Estoy muerto de hambre!</button>
+            <button onclick="checkAnswer('incorrect')">Tengo sed.</button>
+            <button onclick="checkAnswer('incorrect')">Voy a dormir.</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+
+        <button id="nextButton" class="next-btn" onclick="nextQuestion()">Siguiente</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="palabraenaccion.js"></script>
+    
+    <!-- Botón Volver al Inicio -->
+    <a href="lenguaje.html" class="back-to-home">Volver al inicio</a>
+</body>
+</html>

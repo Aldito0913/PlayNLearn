@@ -1,0 +1,194 @@
+/* Fondo y estilo de texto */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f8fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilo del encabezado */
+header {
+    background-color: #ff7f50;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid #ff9884;
+}
+
+/* Contenedor del juego */
+.game-container {
+    background-color: #ffffff;
+    border: 2px solid #ff7f50;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    width: 90%;
+    max-width: 450px;
+    transition: transform 0.3s;
+}
+
+.game-container:hover {
+    transform: scale(1.02);
+}
+
+/* Estilo de preguntas y respuestas */
+#question {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+input[type="number"] {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ff7f50;
+    width: 85%;
+    font-size: 1.2em;
+    margin: 15px 0;
+    transition: border 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: #e66a55;
+    outline: none;
+}
+
+/* Botones */
+button {
+    padding: 12px 25px;
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #e66a55;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Estilo de resultados */
+#result {
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.correct {
+    color: #28a745;
+}
+
+.incorrect {
+    color: #dc3545;
+}
+
+/* Estilo de puntuación */
+#score, #level {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 15px;
+}
+
+/* Modal de finalización del juego */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    width: 85%;
+    max-width: 450px;
+    animation: popUp 0.5s ease-in-out;
+}
+
+@keyframes popUp {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: #ff7f50;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    font-size: 1.2em;
+    color: #333;
+    margin: 20px 0;
+}
+
+.modal-content button {
+    background-color: #ff7f50;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #e66a55;
+}
+
+/* Barra de copyright fija al fondo */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ff5733;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9em;
+    border-top: 3px solid #e34d26;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}

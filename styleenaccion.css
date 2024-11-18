@@ -1,0 +1,244 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #ffde59, #f1c40f);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+}
+
+header {
+    background: #f39c12;
+    color: white;
+    padding: 20px 0;
+    border-bottom: 4px solid #e67e22;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 2.5em;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.game-container {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #34495e;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.options button {
+    font-size: 1.3em;
+    padding: 15px 30px;
+    margin: 15px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #f39c12, #f1c40f);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    width: 100%;
+    max-width: 300px;
+}
+
+.options button:hover {
+    background: linear-gradient(145deg, #f1c40f, #f39c12);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.options button:active {
+    background: linear-gradient(145deg, #f39c12, #f1c40f);
+    transform: translateY(2px);
+}
+
+.feedback {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(0, 128, 0, 0.3);
+}
+
+.incorrect {
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(255, 0, 0, 0.3);
+}
+
+.next-btn {
+    font-size: 1.5em;
+    padding: 15px 30px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 300px;
+}
+
+.next-btn:hover {
+    background-color: #2ecc71;
+    transform: translateY(-5px);
+}
+
+footer {
+    background-color: #f39c12;
+    color: white;
+    padding: 20px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #e67e22;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.game-container {
+    animation: fadeIn 0.7s ease-in-out;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 0;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    .game-container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    .options button {
+        font-size: 1.2em;
+        padding: 12px 25px;
+        margin: 10px;
+    }
+
+    .next-btn {
+        font-size: 1.3em;
+        padding: 12px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px 0;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .game-container {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    .options button {
+        font-size: 1.1em;
+        padding: 10px 20px;
+        margin: 8px;
+    }
+
+    .next-btn {
+        font-size: 1.2em;
+        padding: 10px 20px;
+    }
+}
+
+/* Estilo para el botón Volver al inicio */
+.back-to-home {
+    position: fixed;
+    bottom: 20px;  /* Ajusta la posición a la parte inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e67e22;
+    color: white;
+    font-size: 1.5em;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-home:hover {
+    background-color: #f39c12;
+    transform: translateY(-5px);
+}
+
+.back-to-home:active {
+    transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+    .back-to-home {
+        font-size: 1.2em;
+        padding: 10px 25px;
+    }
+}

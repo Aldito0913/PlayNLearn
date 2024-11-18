@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Multiplicación - Nivel 3</title>
+    <link rel="stylesheet" href="stylenvl3mate.css">
+</head>
+<body>
+    <header>
+        <h1>Juego de Multiplicación - Nivel 3</h1>
+        <p>¡Practica y mejora tus habilidades de multiplicación! Responde correctamente para ganar puntos y avanzar de nivel.</p>
+    </header>
+
+    <section class="game-container">
+        <h2>¿Cuánto es?</h2>
+        <div id="question"></div>
+        <input type="number" id="answer" placeholder="Escribe tu respuesta">
+        <button onclick="checkAnswer()">Enviar</button>
+        <div id="result"></div>
+        <p id="score">Puntuación: 0</p>
+        <p id="level">Nivel: 3</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        let score = 0;
+        let level = 3;
+        let questionCount = 0;
+        let currentQuestion;
+
+        function newQuestion() {
+            let maxNumber;
+            if (level === 3) {
+                maxNumber = 10;
+            } else if (level === 4) {
+                maxNumber = 12;
+            } else {
+                maxNumber = 15;
+            }
+
+            const num1 = Math.floor(Math.random() * maxNumber) + 1;
+            const num2 = Math.floor(Math.random() * maxNumber) + 1;
+            currentQuestion = { num1, num2, answer: num1 * num2 };
+            document.getElementById('question').innerText = `${num1} x ${num2} = ?`;
+            document.getElementById('result').innerText = '';
+            document.getElementById('answer').value = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === currentQuestion.answer) {
+                score += 10;
+                resultElement.innerText = '¡Correcto! 🎉';
+                resultElement.classList.add('correct');
+                resultElement.classList.remove('incorrect');
+                questionCount++;
+
+                if (questionCount % 2 === 0) {
+                    level++;
+                    document.getElementById('level').innerText = `Nivel: ${level}`;
+                }
+
+                if (questionCount >= 8) {
+                    showCompletionModal();
+                    return;
+                }
+            } else {
+                resultElement.innerText = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
+                resultElement.classList.add('incorrect');
+                resultElement.classList.remove('correct');
+            }
+
+            document.getElementById('score').innerText = `Puntuación: ${score}`;
+            setTimeout(newQuestion, 1000);
+        }
+
+        function showCompletionModal() {
+            const modal = document.getElementById('completionModal');
+            modal.style.display = 'flex';
+            document.getElementById('finalScore').innerText = `¡Puntuación final: ${score}!`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('completionModal');
+            modal.style.display = 'none';
+            resetGame();
+        }
+
+        function resetGame() {
+            score = 0;
+            level = 3;
+            questionCount = 0;
+            document.getElementById('score').innerText = `Puntuación: ${score}`;
+            document.getElementById('level').innerText = `Nivel: ${level}`;
+            newQuestion();
+        }
+
+        window.onload = newQuestion;
+    </script>
+
+    <!-- Modal de finalización -->
+    <div id="completionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>¡Juego Completado!</h2>
+            <p id="finalScore"></p>
+            <button onclick="closeModal()">Reiniciar Juego</button>
+            <a href="matematicas.html" class="start-button">Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html>

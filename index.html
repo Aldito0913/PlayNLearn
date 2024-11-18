@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juegos educativos para niños de 7 a 12 años y cultura salvadoreña">
+    <title>PLAYNLEARN</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+        body {
+            font-family: 'Fredoka One', sans-serif;
+            background: linear-gradient(135deg, #a0c4ff 0%, #3a86ff 100%);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px #3a86ff;
+        }
+
+        header p {
+            font-size: 1.5em;
+            color: #e0e0e0;
+        }
+
+        nav {
+            background-color: #a0c4ff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #ffffff;
+            background-color: #4361ee;
+            padding: 12px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 50px;
+            font-size: 1.2em;
+        }
+
+        section {
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 3em;
+        }
+
+        .game-card {
+            display: inline-block;
+            width: 28%;
+            margin: 20px;
+            background-color: #ffffff;
+            border: 5px solid #bde0fe;
+            border-radius: 25px;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card img {
+            width: 140px;
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .game-card:hover img {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .game-card h3 {
+            margin: 20px 0 10px 0;
+            font-size: 2em;
+            color: #1d3557;
+        }
+
+        .game-card p {
+            padding: 0 20px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #a0c4ff;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3a86ff;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            background-color: #4361ee;
+            transform: scale(1.1);
+        }
+
+        /* Hover effects for each game button */
+        .game-card:nth-child(1):hover { background-color: #0501f8; color: white; } /* Matemáticas */
+        .game-card:nth-child(2):hover { background-color: #ff4a4a; color: white; } /* Lenguaje */
+        .game-card:nth-child(3):hover { background-color: #f7e600; color: white; } /* Ciencias */
+        .game-card:nth-child(4):hover { background-color: #4bde2e; color: white; } /* Sociales */
+
+        /* Colors inspired by the Torogoz */
+        .game-card:nth-child(6):hover { 
+            background: linear-gradient(135deg, #a0c4ff, #06d6a0, #ffd166, #3a86ff);
+            color: #003049;
+        }
+
+        @media (max-width: 768px) {
+            .game-card { width: 90%; }
+            h2 { font-size: 2.2em; }
+            header h1 { font-size: 2.8em; }
+            header p { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Aprende Jugando</h1>
+        <p>¡Diviértete aprendiendo con juegos educativos y cultura salvadoreña!</p>
+    </header>
+
+    <nav>
+        <a href="Cultura.html">Cultura</a>
+    </nav>
+
+    <section id="juegos">
+        <h2>¡Explora Nuestros Juegos!</h2>
+
+        <a href="matematicas.html" class="game-card">
+            <img src="imagenes/mate.jpg" alt="Juego de Matemáticas">
+            <h3>Matemáticas</h3>
+            <p>Resuelve acertijos numéricos y diviértete con problemas matemáticos.</p>
+        </a>
+
+        <a href="lenguaje.html" class="game-card">
+            <img src="imagenes/lenguaje.jpg" alt="Juego de Lenguaje">
+            <h3>Lenguaje</h3>
+            <p>Mejora tus habilidades de lectura y escritura jugando.</p>
+        </a>
+
+        <a href="ciencias.html" class="game-card">
+            <img src="imagenes/ciencias.jpg" alt="Juego de Ciencias">
+            <h3>Ciencias</h3>
+            <p>Explora el mundo de la ciencia con divertidas actividades interactivas.</p>
+        </a>
+
+        <a href="sociales.html" class="game-card">
+            <img src="imagenes/sociales.jpg" alt="Juego de Ciencias Sociales">
+            <h3>Sociales</h3>
+            <p>Aprende sobre historia y geografía jugando.</p>
+        </a>
+
+        <a href="quiz.html" class="game-card">
+            <img src="imagenes/cultura.jpg" alt="Juego de Cultura">
+            <h3>Nuestra Raíz</h3>
+            <p>Descubre y aprende sobre nuestra rica cultura e historia.</p>
+        </a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
+        <a href="contacto.html">Contacto</a>
+    </footer>
+
+    <div class="back-to-top" onclick="scrollToTop()">↑</div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
