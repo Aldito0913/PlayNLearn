@@ -5,28 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PLAYNLEARN</title>
     <link rel="stylesheet" href="styles.css">
-    <script>
-        function handleLogin(event) {
-            event.preventDefault(); // Evita el envío del formulario
-
-            // Obtiene los valores de usuario y contraseña
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Verifica si el usuario y la contraseña son correctos
-            if (username === 'osvaldito' && password === 'kid123') {
-                // Muestra la pantalla de carga
-                document.getElementById('loading-screen').style.display = 'flex';
-
-                // Espera 10 segundos y redirige a index.html
-                setTimeout(() => {
-                    window.location.href = "index.html"; // Redirige a la página principal
-                }, 10000); // Cambia el tiempo a 10000 milisegundos (10 segundos)
-            } else {
-                alert('Usuario o contraseña incorrectos.'); // Mensaje de error
-            }
-        }
-    </script>
 </head>
 <body>
     <div class="login-container">
@@ -52,5 +30,32 @@
         <img src="imagenes/mascota.gif" alt="Cargando...">
         <p>Cargando...</p>
     </div>
+
+    <script>
+        // Función para manejar el inicio de sesión
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Recuperar datos del usuario guardados en LocalStorage
+            const savedUser = JSON.parse(localStorage.getItem('user'));
+
+            // Validar credenciales
+            if (savedUser && savedUser.username === username && savedUser.password === password) {
+                // Muestra la pantalla de carga
+                document.getElementById('loading-screen').style.display = 'flex';
+
+                // Espera 10 segundos y redirige a la página principal
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Redirigir a la página principal
+                }, 10000); // 10 segundos
+            } else {
+                alert('Usuario o contraseña incorrectos.');
+            }
+        }
+    </script>
 </body>
-</html> 
+</html>
+

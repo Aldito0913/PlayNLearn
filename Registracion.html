@@ -28,7 +28,7 @@
     <div class="login-container">
         <div class="login-box">
             <h2>Regístrate</h2>
-            <form action="#" method="post">
+            <form onsubmit="handleRegistration(event)">
                 <div class="input-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" required>
@@ -54,12 +54,35 @@
     </div>
 
     <script>
+        // Mostrar/Ocultar contraseña
         function togglePassword(id) {
             const input = document.getElementById(id);
             const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
             input.setAttribute('type', type);
         }
+
+        // Función para manejar el registro
+        function handleRegistration(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            // Validar contraseñas coincidan
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden.');
+                return;
+            }
+
+            // Guardar datos en LocalStorage
+            const userData = { username, email, password };
+            localStorage.setItem('user', JSON.stringify(userData));
+
+            alert('Registro exitoso. Ahora puedes iniciar sesión.');
+            window.location.href = 'login.html';
+        }
     </script>
 </body>
 </html>
-

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juego educativo de adivinanzas sobre personajes históricos para niños">
+    <title>Adivina el Personaje Histórico</title>
+    <link rel="stylesheet" href="sociales2.css">
+</head>
+<body>
+    <header>
+        <h1>Adivina el Personaje Histórico</h1>
+        <p>¡Lee la descripción y selecciona el personaje correcto!</p>
+    </header>
+
+    <div class="game-container">
+        <div id="game-content">
+            <div class="clue-container" id="clues"></div>
+            <img id="character-image" class="character-image" alt="Personaje histórico">
+            <div id="options-container" class="options-container"></div>
+            <div class="feedback" id="feedback"></div>
+            <button id="next-button" class="next-button">Siguiente Personaje</button>
+        </div>
+    </div>
+
+    <div id="score-display" class="score-container">Puntaje: 0</div>
+
+    <script>
+        const characters = [
+            {
+                name: "Mahatma Gandhi",
+                description: "Fui un líder muy importante que luchó por la paz y la igualdad en mi país, India. Aunque no usé armas ni violencia, logré que millones de personas se unieran para luchar contra las injusticias. Usaba ropa sencilla y caminaba mucho. Me llaman el 'Padre de la India'. ¿Quién soy?",
+                image: "imagenes/ghandi.png",
+                options: [
+                    "Mahatma Gandhi",
+                    "Kamala Nehru",
+                    "Mohammad Ali Jinnah",
+                    "Indira Gandhi"
+                ]
+            },
+            {
+                name: "Cristobal Colón",
+                description: "Soy un navegante muy famoso que vivió hace más de 500 años. Crucé el océano con tres barcos buscando una nueva ruta hacia Asia, pero terminé llegando a un lugar lleno de palmeras y playas. ¡Dicen que descubrí un nuevo mundo! ¿Quién soy?",
+                image: "imagenes/colon.png",
+                options: [
+                    "Cristobal Colón",
+                    "Marco Polo",
+                    "Ponce de León",
+                    "Américo Vespucio"
+                ]
+            },
+            {
+                name: "Cleopatra",
+                description: "Soy una reina muy famosa de Egipto. Mi belleza e inteligencia me ayudaron a formar alianzas con poderosos líderes de Roma, como Julio César y Marco Antonio. Fui la última faraona de Egipto antes de que los romanos tomaran el control. ¿Quién soy?",
+                image: "imagenes/cleopatra.png",
+                options: [
+                    "Cleopatra",
+                    "Ramses II",
+                    "Cleopatra Selene II",
+                    "Cornelia"
+                ]
+            },
+            {
+                name: "Monseñor Romero",
+                description: "Fui un sacerdote salvadoreño que defendió a las personas más pobres y a quienes sufrían injusticias en mi país. Dije muchas veces que debíamos luchar por la paz y la justicia sin usar la violencia. Aunque mi vida terminó de forma trágica, sigo siendo un símbolo de esperanza para El Salvador y el mundo. Me llaman 'la voz de los sin voz'. ¿Quién soy?",
+                image: "imagenes/romero.png",
+                options: [
+                    "Monseñor Romero",
+                    "Oscar López",
+                    "Jesús Delgado",
+                    "Ignacio Ellacuría"
+                ]
+            },
+            {
+                name: "Sócrates",
+                description: "Fui un filósofo griego conocido como uno de los pensadores más importantes de la historia. Enseñé a muchas personas y siempre hacía preguntas para que reflexionaran sobre la vida. Mi método de enseñanza lleva mi nombre. ¿Quién soy?",
+                image: "imagenes/socrates.png",
+                options: [
+                    "Sócrates",
+                    "Homero",
+                    "Diogenes",
+                    "Platón"
+                ]
+            },
+            {
+                name: "Atlacatl",
+                description: "Soy un héroe salvadoreño que lideró una gran lucha contra los españoles. Mi pueblo me recuerda como un valiente líder indígena. ¿Quién soy?",
+                image: "imagenes/indio.png",
+                options: [
+                    "Atlacatl",
+                    "Tecún Umán",
+                    "Cipactonal",
+                    "Cuauhtémoc"
+                ]
+            },
+            {
+                name: "Charles Darwin",
+                description: "Fui un científico que desarrolló una teoría que cambió el mundo. Observé animales y plantas en las Islas Galápagos y escribí un libro llamado El origen de las especies. Mi teoría es conocida como la evolución. ¿Quién soy?",
+                image: "imagenes/darwin.png",
+                options: [
+                    "Charles Darwin",
+                    "Alfred Russel Wallace",
+                    "Richard Dawkins",
+                    "Richard Owen"
+                ]
+            },
+            {
+                name: "Maximiliano Hernández Martínez",
+                description: "Fui un general que gobernó El Salvador durante 13 años, desde 1931 hasta 1944. Durante mi presidencia, el país vivió importantes cambios: construí el primer puente sobre el río Lempa, desarrollé la red de carreteras nacionales y llevé la electricidad a muchas comunidades. También enfrenté una crisis económica mundial que afectaba a nuestro país.",
+                image: "imagenes/maxi.png",
+                options: [
+                    "Maximiliano Hernández Martínez",
+                    "Arturo Araujo",
+                    "José María Lemus",
+                    "Óscar Osorio"
+                ]
+            }
+        ];
+
+        let currentCharacter = 0;
+        let questionEnded = false;
+        let score = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getAchievementMessage(score) {
+            const maxScore = characters.length * 100;
+            const percentage = (score / maxScore) * 100;
+        
+            if (percentage === 100) {
+                return {
+                    message: "¡Felicitaciones! ¡Eres un experto en historia! 🏆",
+                    emoji: "🌟"
+                };
+            } else if (percentage >= 75) {
+                return {
+                    message: "¡Muy bien! ¡Tienes un gran conocimiento histórico! 🎉",
+                    emoji: "🏅"
+                };
+            } else if (percentage >= 50) {
+                return {
+                    message: "¡Buen trabajo! Sigue aprendiendo sobre historia. 👍",
+                    emoji: "📚"
+                };
+            } else {
+                return {
+                    message: "¡Sigue estudiando! La historia es fascinante y hay mucho por aprender. 💪",
+                    emoji: "📖"
+                };
+            }
+        }
+        
+        function showEndGame() {
+            const achievement = getAchievementMessage(score);
+            
+            const gameContent = document.getElementById('game-content');
+            gameContent.innerHTML = `
+                <div class="end-game-container">
+                    <div class="trophy-icon">${achievement.emoji}</div>
+                    <div class="score-summary">Puntaje Final: ${score}</div>
+                    <div class="achievement-message">${achievement.message}</div>
+                    <button class="return-button" onclick="window.location.href='sociales.html'">Regresar al menú</button>
+                </div>
+            `;
+            
+            document.getElementById('score-display').style.display = 'none';
+        }
+
+        function displayCharacter() {
+            const character = characters[currentCharacter];
+            document.getElementById('clues').textContent = character.description;
+            document.getElementById('score-display').textContent = `Puntaje: ${score}`;
+            
+            const characterImage = document.getElementById('character-image');
+    characterImage.src = '';
+    characterImage.classList.remove('show-image');
+    
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    const shuffledOptions = shuffleArray([...character.options]);
+    shuffledOptions.forEach(option => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.textContent = option;
+        button.onclick = () => checkAnswer(option);
+        optionsContainer.appendChild(button);
+    });
+
+    // Ocultar el botón de siguiente y limpiar el feedback
+    document.getElementById('next-button').style.display = 'none';
+    document.getElementById('feedback').textContent = '';
+    questionEnded = false;
+}
+
+// 3. Reemplazar la función checkAnswer() completa
+function checkAnswer(selectedAnswer) {
+    if (questionEnded) return;
+
+    const feedback = document.getElementById('feedback');
+    const correctAnswer = characters[currentCharacter].name;
+    const buttons = document.querySelectorAll('.option-button');
+    
+    buttons.forEach(button => {
+        if (button.textContent === correctAnswer) {
+            button.classList.add('correct');
+        } else if (button.textContent === selectedAnswer) {
+            button.classList.add('incorrect');
+        }
+        button.disabled = true;
+    });
+
+    if (selectedAnswer === correctAnswer) {
+        score += 100;
+        feedback.textContent = "¡Correcto! ¡Has adivinado el personaje!";
+        feedback.style.color = '#2e7d32';
+    } else {
+        feedback.textContent = "No es correcto. La respuesta correcta está marcada en verde.";
+        feedback.style.color = '#c62828';
+    }
+    
+    document.getElementById('score-display').textContent = `Puntaje: ${score}`;
+    document.getElementById('character-image').src = characters[currentCharacter].image;
+    document.getElementById('character-image').classList.add('show-image');
+    
+    questionEnded = true;
+
+    // Mostrar el botón de siguiente si no es el último personaje
+    if (currentCharacter < characters.length - 1) {
+        const nextButton = document.getElementById('next-button');
+        nextButton.style.display = 'block';
+        nextButton.onclick = () => {
+            currentCharacter++;
+            displayCharacter();
+        };
+    } else {
+        // Si es el último personaje, mostrar el fin del juego después de un breve delay
+        setTimeout(showEndGame, 2000);
+    }
+}
+
+        // Iniciar el juego
+        displayCharacter();
+    </script>
+</body>
+</html>

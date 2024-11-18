@@ -3,121 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Sumas - Nivel 1</title>
+    <title>Juego de Matemáticas</title>
     <link rel="stylesheet" href="stylenvl1mate.css">
+    <audio id="correctSound" src="/imagenes/cienciasound.wav"></audio>
+    <audio id="incorrectSound" src="/imagenes/error.wav"></audio>
 </head>
 <body>
     <header>
-        <h1>Juego de Sumas - Nivel 1</h1>
-        <p>Practica tus habilidades de suma. ¡Responde correctamente para ganar puntos y avanzar de nivel!</p>
+        <h1>Juego de Matemáticas</h1>
     </header>
-
-    <section class="game-container">
-        <h2>¿Cuánto es?</h2>
-        <div id="question"></div>
-        <input type="number" id="answer" placeholder="Escribe tu respuesta">
-        <button onclick="checkAnswer()">Enviar</button>
+    <div class="game-container">
+        <div id="level">Nivel: <span id="levelNumber">1</span></div>
+        <div id="score">Puntuación: <span id="scoreCount">0</span></div>
+        <div id="question">Pregunta aquí</div>
+        <div id="multipleChoiceOptions" class="option-container">
+            <button class="option-button" onclick="selectAnswer(0)">Opción 1</button>
+            <button class="option-button" onclick="selectAnswer(1)">Opción 2</button>
+            <button class="option-button" onclick="selectAnswer(2)">Opción 3</button>
+            <button class="option-button" onclick="selectAnswer(3)">Opción 4</button>
+        </div>
+        <button id="submitMultipleChoice" onclick="checkAnswer()" disabled>Verificar</button>
         <div id="result"></div>
-        <p id="score">Puntuación: 0</p>
-        <p id="level">Nivel: 1</p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
-    </footer>
-
-    <script>
-        let score = 0;
-        let level = 1;
-        let questionCount = 0;
-        let currentQuestion;
-
-        function newQuestion() {
-            let maxNumber;
-            if (level === 1) {
-                maxNumber = 10;
-            } else if (level === 2) {
-                maxNumber = 20;
-            } else if (level === 3) {
-                maxNumber = 30;
-            } else if (level === 4) {
-                maxNumber = 40;
-            } else {
-                maxNumber = 50;
-            }
-
-            const num1 = Math.floor(Math.random() * maxNumber) + 1;
-            const num2 = Math.floor(Math.random() * maxNumber) + 1;
-            currentQuestion = { num1, num2, answer: num1 + num2 };
-            document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
-            document.getElementById('result').innerText = '';
-            document.getElementById('answer').value = '';
-        }
-
-        function checkAnswer() {
-            const userAnswer = parseInt(document.getElementById('answer').value);
-            const resultElement = document.getElementById('result');
-
-            if (userAnswer === currentQuestion.answer) {
-                score += 10;
-                resultElement.innerText = '¡Correcto! 🎉';
-                resultElement.classList.add('correct');
-                resultElement.classList.remove('incorrect');
-                questionCount++;
-
-                if (questionCount % 2 === 0) {
-                    level++;
-                    document.getElementById('level').innerText = `Nivel: ${level}`;
-                }
-
-                if (questionCount >= 8) {
-                    showCompletionModal();
-                    return;
-                }
-            } else {
-                resultElement.innerText = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
-                resultElement.classList.add('incorrect');
-                resultElement.classList.remove('correct');
-            }
-
-            document.getElementById('score').innerText = `Puntuación: ${score}`;
-
-            // Genera automáticamente una nueva pregunta después de un breve retraso
-            setTimeout(newQuestion, 1000); // Cambia de pregunta después de 1 segundo
-        }
-
-        function showCompletionModal() {
-            const modal = document.getElementById('completionModal');
-            modal.style.display = 'flex';
-            document.getElementById('finalScore').innerText = `¡Puntuación final: ${score}!`;
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('completionModal');
-            modal.style.display = 'none';
-            resetGame();
-        }
-
-        function resetGame() {
-            score = 0;
-            level = 1;
-            questionCount = 0;
-            document.getElementById('score').innerText = `Puntuación: ${score}`;
-            document.getElementById('level').innerText = `Nivel: ${level}`;
-            newQuestion();
-        }
-
-        window.onload = newQuestion;
-    </script>
-
-    <!-- Modal de finalización -->
-    <div id="completionModal" class="modal" style="display: none;">
+    </div>
+    <div class="modal" id="gameOverModal" style="display: none;">
         <div class="modal-content">
-            <h2>¡Juego Completado!</h2>
-            <p id="finalScore"></p>
-            <button onclick="closeModal()">Reiniciar Juego</button>
-            <a href="matematicas.html" class="start-button" style="display: inline-block; margin-top: 10px; padding: 12px 20px; background-color: #ff5733; color: white; border: none; border-radius: 8px; font-size: 1em; text-decoration: none;">Volver al Inicio</a>
+            <img src="https://img.freepik.com/vector-premium/medalla-oro-brillante-icono-dibujos-animados-ilustracion-estrella_400474-504.jpg" alt="Genio Matemático" style="width: 175px; height: 200px; margin-bottom: 10px;">
+            <h2>!Genio Matematico¡</h2>
+            <p id="finalScore">Tu puntuación final: </p>
+            <button onclick="window.location.href='matematicas.html'">Volver al Inicio</button>
         </div>
     </div>
+    <footer>
+        <p>&copy; 2023 Juego de Matemáticas</p>
+    </footer>
+    <script>
+        const maxLevels = 10;
+        let currentLevel = 1;
+        let score = 0;
+        let currentAnswer;
+        let selectedAnswerIndex = null;
+
+        const updateQuestion = () => {
+            // Genera operaciones de suma y resta
+            let num1 = Math.floor(Math.random() * (currentLevel * 2 + 5)) + 1;
+            let num2 = Math.floor(Math.random() * (currentLevel * 2 + 5)) + 1;
+            let isAddition = Math.random() < 0.5;
+            currentAnswer = isAddition ? num1 + num2 : num1 - num2;
+
+            document.getElementById("question").textContent = `${num1} ${isAddition ? "+" : "-"} ${num2} = ?`;
+
+            let correctIndex = Math.floor(Math.random() * 4);
+            for (let i = 0; i < 4; i++) {
+                let option = document.querySelectorAll(".option-button")[i];
+                option.classList.remove("selected", "correct", "incorrect");
+                option.disabled = false;
+                option.textContent = i === correctIndex ? currentAnswer : currentAnswer + Math.floor(Math.random() * 10) - 5;
+            }
+            selectedAnswerIndex = null;
+            document.getElementById("submitMultipleChoice").disabled = true;
+            document.getElementById("result").textContent = "";
+        };
+
+        const selectAnswer = (index) => {
+            document.querySelectorAll(".option-button").forEach(button => button.classList.remove("selected"));
+            document.querySelectorAll(".option-button")[index].classList.add("selected");
+            selectedAnswerIndex = index;
+            document.getElementById("submitMultipleChoice").disabled = false;
+        };
+
+        const checkAnswer = () => {
+            let selectedButton = document.querySelectorAll(".option-button")[selectedAnswerIndex];
+            let currentQuestion = question[currentLevel - 1];
+            const correctSound = document.getElementById("correctSound");
+            const errorSound = document.getElementById("incorrectSound"); // Referencia al audio incorrecto
+            
+
+            if (parseInt(selectedButton.textContent) === currentAnswer) {
+                score += 10;
+                document.getElementById("result").textContent = "¡Correcto!";
+                document.getElementById("result").classList.add("correct");
+                selectedButton.classList.add("correct");
+                
+                correctSound.play();
+
+                setTimeout(() => {
+                    if (currentLevel < maxLevels) {
+                        currentLevel++;
+                        document.getElementById("levelNumber").textContent = currentLevel;
+                        document.getElementById("scoreCount").textContent = score;
+                        updateQuestion();
+                    } else {
+                        endGame();
+                    }
+                }, 1000);
+            } else {
+                document.getElementById("result").textContent = "Incorrecto.";
+                document.getElementById("result").classList.add("incorrect");
+                selectedButton.classList.add("incorrect");
+
+                incorrectSound.play(); // Reproduce el sonido incorrecto
+
+                // Reseteamos el contador si la respuesta es incorrecta
+                correctAnswersInRow = 0;
+                
+
+            }
+        };
+
+        const endGame = () => {
+            document.getElementById("finalScore").textContent = `Tu puntuación final: ${score}`;
+            document.getElementById("gameOverModal").style.display = "flex";
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateQuestion();
+        });
+    </script>
 </body>
 </html>

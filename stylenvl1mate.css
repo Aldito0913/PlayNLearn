@@ -58,41 +58,47 @@ header {
     margin: 15px 0;
 }
 
-input[type="number"] {
+/* Opciones de respuesta múltiple */
+#multipleChoiceOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre las opciones */
+    margin-bottom: 20px;
+}
+
+.option-button {
     padding: 12px;
+    background-color: #f0f8ff;
+    border: 2px solid #ff6f61;
     border-radius: 8px;
-    border: 1px solid #ff6f61;
-    width: 85%;
     font-size: 1.2em;
-    margin: 15px 0;
-    transition: border 0.3s;
-}
-
-input[type="number"]:focus {
-    border-color: #e65a4e;
-    outline: none;
-}
-
-/* Botones */
-button {
-    padding: 12px 25px;
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
     transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
 }
 
-button:hover {
+.option-button:hover {
     background-color: #e65a4e;
     transform: scale(1.05);
 }
 
-button:active {
+.option-button:active {
     transform: scale(0.98);
+}
+
+.option-button.selected {
+    background-color: #ff6f61;
+    color: white;
+}
+
+.option-button.correct {
+    background-color: #28a745;
+    color: white;
+}
+
+.option-button.incorrect {
+    background-color: #dc3545;
+    color: white;
 }
 
 /* Estilo de resultados */
@@ -115,6 +121,28 @@ button:active {
     font-size: 1.2em;
     color: #555;
     margin-top: 15px;
+}
+
+/* Botón de enviar */
+#submitMultipleChoice {
+    padding: 12px 25px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#submitMultipleChoice:hover {
+    background-color: #e65a4e;
+    transform: scale(1.05);
+}
+
+#submitMultipleChoice:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
 }
 
 /* Modal de finalización del juego */
@@ -195,7 +223,6 @@ button:active {
 }
 
 /* Pie de página */
-/* Pie de página */
 footer {
     background-color: #ff6f61;
     color: white;
@@ -207,7 +234,6 @@ footer {
     border-top: 3px solid #ff867e;
     font-size: 0.9em;
 }
-
 
 /* Responsivo */
 @media (max-width: 600px) {
@@ -232,5 +258,12 @@ footer {
 
     .modal-content {
         width: 90%;
+    }
+
+    /* Ajuste de botones para respuesta múltiple */
+    .option-button {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
     }
 }

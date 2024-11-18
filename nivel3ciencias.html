@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego Educativo</title>
+    <link rel="stylesheet" href="stylenvl3cien.css">
+</head>
+<body>
+    <header>
+        <h1>Une el animal pequeño con su versión adulta</h1>
+    </header>
+
+    <!-- Contenedor del juego -->
+    <div class="game-container" id="game-container"></div>
+
+    <!-- Botones de control -->
+    <button id="next-level-btn" style="display: none;">Siguiente Nivel</button>
+    <button id="restart-btn" style="display: none;">Reiniciar Juego</button>
+
+    <!-- Indicadores de puntaje y nivel -->
+    <div id="score">Puntos: 0</div>
+    <div id="level">Nivel: 1</div>
+
+    <!-- Modal de felicitaciones -->
+    <div id="congratulationsModal" class="modal">
+         <!-- Imagen de la medalla o algún ícono -->
+         
+        <div class="modal-content">
+            <h2>¡Felicidades has ganado la medalla zoólogo de primera!</h2>
+            <p>Has completado el juego.</p>
+            <button id="redirect-btn">Ir al Inicio</button>
+        </div>
+    </div>
+
+    <!-- JavaScript del juego -->
+    <script>
+        const pairs = [
+        ['https://st3.depositphotos.com/6633222/16259/v/450/depositphotos_162590148-stock-illustration-cartoon-lioness-isolated-on-white.jpg', 'https://st3.depositphotos.com/1967477/13329/v/450/depositphotos_133295508-stock-illustration-cartoon-funny-lion-walking.jpg'],
+        ['https://img.freepik.com/vector-gratis/lindo-bebe-ciervo-mirando-ilustracion-vectorial-frontal_96037-422.jpg', 'https://st.depositphotos.com/2664341/4822/v/450/depositphotos_48227229-stock-illustration-deer-cartoon.jpg'],
+        ['https://img.freepik.com/vector-premium/cute-dibujos-animados-serpiente-verde_188253-2263.jpg?w=360', 'https://img.freepik.com/vector-premium/linda-serpiente-dibujos-animados-aislada-sobre-fondo-blanco-ilustracion-vector-ano-serpiente_623790-4765.jpg'],
+        ['https://illustoon.com/photo/2645.png', 'https://img.freepik.com/vector-premium/oso-gracioso-dibujos-animados-caminando-sobre-fondo-blanco_906149-99011.jpg'],
+        ['https://img.freepik.com/vector-premium/cute-dibujos-animados-loro-rama-arbol_188253-2393.jpg', 'https://img.freepik.com/vector-premium/ilustracion-vectorial-plana-loros-dibujo-mano-dibujos-animados-loros-ilustracion-vectorial-aislada_501705-7138.jpg'],
+        ['https://img.freepik.com/vector-premium/lindo-pequeno-beagle-perro-dibujos-animados-sentado_188253-5454.jpg', 'https://img.freepik.com/vector-premium/perro-dibujos-animados-manchas-marrones-sienta-sobre-fondo-blanco_905719-2.jpg'],
+        ['https://img.freepik.com/vector-premium/dibujos-animados-ilustraciones-vectoriales-zorros_969863-309765.jpg', 'https://st3.depositphotos.com/2343527/15436/v/950/depositphotos_154363792-stock-illustration-cute-smiling-red-fox-cartoon.jpg'],
+        ['https://img.freepik.com/vector-premium/linda-pequena-tortuga-dibujos-animados-nadando_188253-3728.jpg', 'https://img.freepik.com/vector-premium/ilustracion-dibujos-animados-tortuga-caminando-medio-prado-acantilado-al-lado-rio_323802-955.jpg']
+    ];
+
+    let cardElements = [];
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+    let matchedCards = 0;
+    let score = 0;
+    let level = 1;
+
+    const gameContainer = document.getElementById('game-container');
+    const nextLevelBtn = document.getElementById('next-level-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const scoreDisplay = document.getElementById('score');
+    const levelDisplay = document.getElementById('level');
+    const congratulationsModal = document.getElementById('congratulationsModal');
+    const redirectBtn = document.getElementById('redirect-btn');
+
+    const correctSound = new Audio('/imagenes/correct.wav');
+
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+    }
+
+    function createCards() {
+        cardElements = [];
+        const selectedPairs = pairs.slice(0, level * 2);
+        const allCards = selectedPairs.flat();
+        shuffle(allCards);
+
+        gameContainer.innerHTML = '';
+        allCards.forEach(image => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.image = image;
+
+            const img = document.createElement('img');
+            img.src = image;
+            img.alt = 'Imagen de pareja';
+            img.classList.add('hidden');
+
+            card.appendChild(img);
+            card.addEventListener('click', flipCard);
+            gameContainer.appendChild(card);
+            cardElements.push(card);
+        });
+    }
+
+    function flipCard() {
+        if (lockBoard || this === firstCard) return;
+
+        const img = this.querySelector('img');
+        img.classList.remove('hidden');
+
+        this.classList.add('flipped');
+
+        if (!firstCard) {
+            firstCard = this;
+            return;
+        }
+
+        secondCard = this;
+        lockBoard = true;
+
+        checkForMatch();
+    }
+
+    function checkForMatch() {
+        const isMatch = pairs.some(pair =>
+            (pair[0] === firstCard.dataset.image && pair[1] === secondCard.dataset.image) ||
+            (pair[1] === firstCard.dataset.image && pair[0] === secondCard.dataset.image)
+        );
+
+        if (isMatch) {
+            matchedCards += 2;
+            score += 10;
+            scoreDisplay.textContent = `Puntos: ${score}`;
+
+            correctSound.play();
+
+            resetBoard();
+            if (matchedCards === cardElements.length) {
+                if (level === 4) {
+                    showCongratulationsModal();
+                } else {
+                    nextLevelBtn.style.display = 'block';
+                }
+            }
+        } else {
+            setTimeout(() => {
+                firstCard.querySelector('img').classList.add('hidden');
+                secondCard.querySelector('img').classList.add('hidden');
+                resetBoard();
+            }, 1000);
+        }
+    }
+
+    function resetBoard() {
+        [firstCard, secondCard, lockBoard] = [null, null, false];
+    }
+
+    function levelUp() {
+        level++;
+        matchedCards = 0;
+        levelDisplay.textContent = `Nivel: ${level}`;
+        nextLevelBtn.style.display = 'none';
+        createCards();
+    }
+
+    function showCongratulationsModal() {
+        const modalContent = congratulationsModal.querySelector('.modal-content');
+        modalContent.innerHTML = `
+            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/dd5066ea-28d3-4451-ab5e-16013bba675a/da78e74-b1f7d425-2816-4d09-b656-ffc964573ddd.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RkNTA2NmVhLTI4ZDMtNDQ1MS1hYjVlLTE2MDEzYmJhNjc1YVwvZGE3OGU3NC1iMWY3ZDQyNS0yODE2LTRkMDktYjY1Ni1mZmM5NjQ1NzNkZGQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.i9EoLNKVfdUYkbDgyuJZ7WnNhLWAlZVAQa9Nbfj8o6M" alt="Medalla Jugador Maestro" style="display: block; margin: 0 auto; max-width: 100px; margin-bottom: 20px;">
+            <h2>¡Felicidades! has recibido la medalla zoólogo de primera</h2>
+            <p>Has completado el juego con ${score} puntos.</p>
+            <button id="redirect-btn">Ir al Inicio</button>
+        `;
+
+        congratulationsModal.classList.add('show');
+
+        const redirectBtn = modalContent.querySelector('#redirect-btn');
+        redirectBtn.addEventListener('click', () => {
+            window.location.href = 'ciencias.html';
+        });
+    }
+
+    nextLevelBtn.addEventListener('click', levelUp);
+
+    restartBtn.addEventListener('click', () => {
+        matchedCards = 0;
+        score = 0;
+        level = 1;
+        scoreDisplay.textContent = `Puntos: ${score}`;
+        levelDisplay.textContent = `Nivel: ${level}`;
+        restartBtn.style.display = 'none';
+        nextLevelBtn.style.display = 'none';
+        congratulationsModal.classList.remove('show');
+        createCards();
+    });
+
+    // Iniciar el juego
+    createCards();
+    </script>
+
+    <footer>
+        Juegos 2024, todos los derechos reservados
+    </footer>
+</body>
+</html>

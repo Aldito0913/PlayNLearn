@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Plantas</title>
+    <link rel="stylesheet" href="stylenvl1.cien.css">
+    <audio id="correctSound" src="/imagenes/cienciasound.wav"></audio>
+    <audio id="incorrectSound" src="/imagenes/error.wav"></audio>
+</head>
+<body>
+    <header>
+        <h1>Juego de Plantas</h1>
+    </header>
+    <div class="game-container">
+        <div id="level">Nivel: <span id="levelNumber">1</span></div>
+        <div id="score">Puntuación: <span id="scoreCount">0</span></div>
+        <div id="question">Pregunta aquí</div>
+        <img id="questionImage" src="" alt="Imagen de la pregunta" class="question-image">
+        <div id="multipleChoiceOptions" class="option-container">
+            <button class="option-button" onclick="selectAnswer(0)">Opción 1</button>
+            <button class="option-button" onclick="selectAnswer(1)">Opción 2</button>
+            <button class="option-button" onclick="selectAnswer(2)">Opción 3</button>
+            <button class="option-button" onclick="selectAnswer(3)">Opción 4</button>
+        </div>
+        <button id="submitMultipleChoice" onclick="checkAnswer()" disabled>Verificar</button>
+        <div id="result"></div>
+    </div>
+    <div class="modal" id="gameOverModal" style="display: none;">
+        <div class="modal-content">
+            <img src="https://images.wikidexcdn.net/mwuploads/wikidex/7/76/latest/20180306050104/Medalla_Hoja.png" alt="Genio Matemático" style="width: 175px; height: 200px; margin-bottom: 10px;">
+            <h2>¡Eres un amante de las Plantas!</h2>
+            <p id="finalScore">Tu puntuación final: </p>
+            <button onclick="window.location.href='ciencias.html'">Volver al Inicio</button> <!-- Redirige a ciencias.html -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Juego de Plantas</p>
+    </footer>
+    <script>
+        const maxLevels = 10;
+        let currentLevel = 1;
+        let score = 0;
+        let currentAnswer;
+        let selectedAnswerIndex = null;
+        let correctAnswersInRow = 0;
+
+        const questions = [
+            { question: "¿Cómo se llama la parte de la planta que absorbe agua?", 
+              options: ["Raíz", "Tallo", "Hoja", "Flor"], 
+              correctAnswer: "Raíz", 
+              image: "https://img.freepik.com/premium-vector/watering-plants-from-watering-can-vector-illustration_135595-73385.jpg" },
+            { question: "¿Qué parte de la planta hace la fotosíntesis?", 
+              options: ["Raíz", "Tallo", "Hoja", "Flor"], 
+              correctAnswer: "Hoja", 
+              image: "https://img.freepik.com/vector-premium/planta-interior-escena-campamento_24640-33254.jpg" },
+            { question: "¿Qué parte de la planta transporta el agua?", 
+              options: ["Raíz", "Tallo", "Hoja", "Flor"], 
+              correctAnswer: "Tallo", 
+              image: "https://img.freepik.com/vector-premium/planta-hojas-verdes-raices_1308-24720.jpg?semt=ais_hybrid" },
+            { question: "¿Qué produce una planta para alimentarse?", 
+              options: ["Agua", "Fotosíntesis", "Luz", "Viento"], 
+              correctAnswer: "Fotosíntesis", 
+              image: "https://mundoagropecuario.com/wp-content/uploads/2022/07/26-11-16-fotosintesis.jpg" },
+            { question: "¿Cómo se llaman las plantas que crecen en el agua?", 
+              options: ["Plantas acuáticas", "Plantas trepadoras", "Plantas terrestres", "Plantas del desierto"], 
+              correctAnswer: "Plantas acuáticas", 
+              image: "https://img.freepik.com/vector-premium/diseno-logotipo-lily-pad-vector-estilo-dibujos-animados_1322206-37372.jpg" },
+            { question: "¿Cómo se llaman las plantas que viven solo una temporada?", 
+              options: ["Plantas perennes", "Plantas anuales", "Plantas tropicales", "Plantas acuáticas"], 
+              correctAnswer: "Plantas anuales", 
+              image: "https://www.muyinteresante.com/wp-content/uploads/sites/5/2024/02/25/65db3b94917d6.jpeg?resize=1024,683" },
+            { question: "¿Qué tipo de planta no tiene flores?", 
+              options: ["Helechos", "Girasoles","Rosas","Orquídeas" ], 
+              correctAnswer: "Helechos", 
+              image: "https://m.media-amazon.com/images/I/71eYOzS9WtL._AC_UF894,1000_QL80_.jpg" },
+            { question: "¿Qué tipo de planta no necesita mucha agua?", 
+              options: ["Cactus", "Rosa", "Tulipán", "Lirio"], 
+              correctAnswer: "Cactus", 
+              image: "https://static.vecteezy.com/system/resources/previews/014/744/350/non_2x/cartoon-cactus-in-pot-indoor-succulent-plant-with-thorns-and-flowers-cacti-for-home-and-interior-colorful-botanical-doodle-illustration-isolated-on-white-background-vector.jpg" },
+            { question: "¿Qué planta es famosa por ser carnívora?", 
+              options: ["Hiedra", "Albahaca", "Margarita", "Venus atrapamoscas"], 
+              correctAnswer: "Venus atrapamoscas", 
+              image: "https://st4.depositphotos.com/2942953/20204/v/450/depositphotos_202040658-stock-illustration-leaves-venus-flytrap-dionaea-muscipula.jpg" },
+            { question: "¿Qué es el polen?", 
+              options: ["Parte de la raíz", "Parte de la flor", "Parte de la semilla", "Parte del tallo"], 
+              correctAnswer: "Parte de la flor", 
+              image: "https://www.shutterstock.com/image-vector/vector-illustration-european-honey-bee-600nw-2095983142.jpg" }
+        ];
+
+        const updateQuestion = () => {
+            let currentQuestion = questions[currentLevel - 1];
+            document.getElementById("question").textContent = currentQuestion.question;
+            document.getElementById("questionImage").src = currentQuestion.image;
+
+            // Mezclar las opciones
+            let options = [...currentQuestion.options];
+            let correctAnswer = currentQuestion.correctAnswer;
+            options.splice(options.indexOf(correctAnswer), 1); // Eliminar la respuesta correcta
+            options = [correctAnswer, ...options]; // Añadir la respuesta correcta a las opciones
+            options = shuffleArray(options); // Mezclar las opciones
+
+            // Asignar las opciones al HTML
+            let buttons = document.querySelectorAll(".option-button");
+            for (let i = 0; i < 4; i++) {
+                buttons[i].classList.remove("selected", "correct", "incorrect");
+                buttons[i].disabled = false;
+                buttons[i].textContent = options[i];
+            }
+
+            selectedAnswerIndex = null;
+            document.getElementById("submitMultipleChoice").disabled = true;
+            document.getElementById("result").textContent = "";
+        };
+
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
+            }
+            return array;
+        };
+
+        const selectAnswer = (index) => {
+            document.querySelectorAll(".option-button").forEach(button => button.classList.remove("selected"));
+            document.querySelectorAll(".option-button")[index].classList.add("selected");
+            selectedAnswerIndex = index;
+            document.getElementById("submitMultipleChoice").disabled = false;
+        };
+
+        const checkAnswer = () => {
+            let selectedButton = document.querySelectorAll(".option-button")[selectedAnswerIndex];
+            let currentQuestion = questions[currentLevel - 1];
+            const correctSound = document.getElementById("correctSound"); // Referencia al audio
+            const errorSound = document.getElementById("incorrectSound"); // Referencia al audio incorrecto
+
+
+            if (selectedButton.textContent === currentQuestion.correctAnswer) {
+                score += 10;
+                document.getElementById("result").textContent = "¡Correcto!";
+                document.getElementById("result").classList.add("correct");
+                selectedButton.classList.add("correct");
+
+                correctSound.play();
+
+                correctAnswersInRow++;
+
+                // Avanzar de nivel solo si la respuesta es correcta
+                if (correctAnswersInRow >= 1) {
+                    setTimeout(() => {
+                        if (currentLevel < maxLevels) {
+                            currentLevel++;
+                            correctAnswersInRow = 0;
+                            document.getElementById("levelNumber").textContent = currentLevel;
+                            document.getElementById("scoreCount").textContent = score;
+                            updateQuestion();
+                        } else {
+                            endGame();
+                        }
+                    }, 1000);
+                }
+            } else {
+                document.getElementById("result").textContent = "Incorrecto.";
+                document.getElementById("result").classList.add("incorrect");
+                selectedButton.classList.add("incorrect");
+
+                incorrectSound.play(); // Reproduce el sonido incorrecto
+
+                // Reseteamos el contador si la respuesta es incorrecta
+                correctAnswersInRow = 0;
+            }
+        };
+
+        const endGame = () => {
+            document.getElementById("finalScore").textContent = `Tu puntuación final: ${score}`;
+            document.getElementById("gameOverModal").style.display = "flex";
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateQuestion();
+        });
+    </script>
+</body>
+</html>
+

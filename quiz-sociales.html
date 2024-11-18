@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Juegos educativos de la asignatura de sociales para niños de 7 a 12 años. Aprender sobre geografía, historia y cultura mientras juegan.">
+        <title>Quiz de Estudios Sociales para Niños</title>
+        <link rel="stylesheet" href="sociales1.css">
+    </head>
+<body>
+    <header>
+        <h1>Quiz de Estudios Sociales</h1>
+        <p>¡Aprende y diviértete respondiendo estas preguntas!</p>
+    </header>
+
+    <div class="game-container">
+        <div id="question-container">
+            <h2 id="question-text"></h2>
+            <div class="options-container" id="options-container"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-button" id="next-button" style="display: none;">Siguiente Pregunta</button>
+        </div>
+        <div class="score">Puntuación: <span id="score">0</span> de <span id="total-questions">0</span></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Quién es considerado el ¨Padre de la patria¨ en El Salvador?",
+                options: ["Manuel José Arce", "José Matias Delgado", "Fransisco Morazán", "Pedro de Alvarado"],
+                correctAnswer: 1,
+                explanation: "¡José Matias Delgado es considerado el padre de la patria salvadoreña!"
+            },
+            {
+                question: "¿Qué debemos hacer para cuidar el medio ambiente?",
+                options: ["Tirar basura en la calle", "Reciclar y no desperdiciar agua", "Dejar las luces encendidas", "Usar muchas bolsas de plástico"],
+                correctAnswer: 1,
+                explanation: "¡Reciclar y cuidar el agua son acciones muy importantes para proteger nuestro planeta!"
+            },
+            {
+                question: "¿Cuál es un derecho de los niños?",
+                options: ["No ir a la escuela", "Trabajar todo el día", "Recibir educación", "No jugar"],
+                correctAnswer: 2,
+                explanation: "¡La educación es un derecho fundamental de todos los niños!"
+            },
+            {
+                question: "¿En que año se firmo el acta de independencia de El Salvador?",
+                options: ["2001", "1914", "1841", "1821"],
+                correctAnswer: 3,
+                explanation: "¡El acta de independencia de El salvador fue firmado en el año 1821!"
+            },
+            {
+                question: "¿A quién se le atribuye el descubrimiento de América?",
+                options: ["Américo Vespucio", "Benito Mussolini", "Cristobal Colón", "Hernán Cortés"],
+                correctAnswer: 2,
+                explanation: "¡El descubrimiento de América se le atribuye a Cristobal Colón!"
+            },
+            {
+                question: "¿En que año se firmaron los acuerdos de paz?",
+                options: ["1980", "2001", "1995", "1992"],
+                correctAnswer: 3,
+                explanation: "¡La paz se firmo en el año 1992!"
+            },
+            {
+                question: "¿Qué dia se celebra el aniversario de los acuerdos de paz en El Salvador?",
+                options: ["1 de enero", "16 de enero", "15 de enero", "15 de septiembre"],
+                correctAnswer: 1,
+                explanation: "¡La paz se firmo el 16 de enero de 1992!"
+            },
+            {
+                question: "¿Cuál es una responsabilidad en casa?",
+                options: ["Ver televisión todo el día", "Mantener ordenada tu habitación", "Romper los juguetes", "No hacer la tarea"],
+                correctAnswer: 1,
+                explanation: "¡Mantener el orden en casa es una responsabilidad importante!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let hasAnswered = false;
+
+        function displayQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById('question-text').textContent = questionData.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            questionData.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('next-button').style.display = 'none';
+            hasAnswered = false;
+
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('score').textContent = score;
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            const questionData = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-button');
+            
+            buttons.forEach((button, index) => {
+                if (index === questionData.correctAnswer) {
+                    button.classList.add('correct');
+                }
+                if (index === selectedIndex && index !== questionData.correctAnswer) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === questionData.correctAnswer) {
+                score++;
+                document.getElementById('feedback').textContent = '¡Correcto! ' + questionData.explanation;
+                document.getElementById('feedback').style.color = '#2e7d32';
+            } else {
+                document.getElementById('feedback').textContent = 'No es correcto. ' + questionData.explanation;
+                document.getElementById('feedback').style.color = '#c62828';
+            }
+
+            document.getElementById('score').textContent = score;
+            document.getElementById('next-button').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function showFinalScore() {
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <h2>¡Quiz completado!</h2>
+                <p class="score">Puntuación final: ${score} de ${questions.length}</p>
+                <p>${getFeedbackMessage()}</p>
+                <div class="button-container">
+                    <button class="return-button" onclick="window.location.href='sociales.html'">Regresar al menú</button>
+                </div>
+            `;
+        }
+
+        function getFeedbackMessage() {
+            const percentage = (score / questions.length) * 100;
+            if (percentage >= 80) {
+                return "¡Excelente trabajo! ¡Eres un experto en estudios sociales! 🌟";
+            } else if (percentage >= 60) {
+                return "¡Buen trabajo! Sigue practicando para mejorar. 👍";
+            } else {
+                return "Sigue estudiando y lo harás mejor la próxima vez. ¡Tú puedes! 💪";
+            }
+        }
+
+        document.getElementById('next-button').onclick = nextQuestion;
+        displayQuestion();
+    </script>
+</body>
+</html>

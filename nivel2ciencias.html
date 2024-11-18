@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Animales</title>
+    <link rel="stylesheet" href="stylenvl1.cien.css">
+    <audio id="correctSound" src="/imagenes/cienciasound.wav"></audio>
+    <audio id="incorrectSound" src="/imagenes/error.wav"></audio>
+</head>
+<body>
+    <header>
+        <h1>Juego de Animales</h1>
+    </header>
+    <div class="game-container">
+        <div id="level">Nivel: <span id="levelNumber">1</span></div>
+        <div id="score">Puntuación: <span id="scoreCount">0</span></div>
+        <div id="question">Pregunta aquí</div>
+        <img id="questionImage" src="" alt="Imagen de la pregunta" class="question-image">
+        <div id="multipleChoiceOptions" class="option-container">
+            <button class="option-button" onclick="selectAnswer(0)">Opción 1</button>
+            <button class="option-button" onclick="selectAnswer(1)">Opción 2</button>
+            <button class="option-button" onclick="selectAnswer(2)">Opción 3</button>
+            <button class="option-button" onclick="selectAnswer(3)">Opción 4</button>
+        </div>
+        <button id="submitMultipleChoice" onclick="checkAnswer()" disabled>Verificar</button>
+        <div id="result"></div>
+    </div>
+    <div class="modal" id="gameOverModal" style="display: none;">
+        <div class="modal-content">
+            <img src="https://media.istockphoto.com/id/1350573713/es/vector/medalla-de-oro.jpg?s=612x612&w=0&k=20&c=pkK0yxPt6crjyKM4IZomsFTAUVFH_1OGlA9R6xrWgkY=" alt="Genio Matemático" style="width: 175px; height: 200px; margin-bottom: 10px;">
+            <h2>¡Increible Futuro zoólogo!</h2>
+            <p id="finalScore">Tu puntuación final: </p>
+            <button onclick="window.location.href='ciencias.html'">Volver al Inicio</button> <!-- Redirige a ciencias.html -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Juego de Animales</p>
+    </footer>
+    <script>
+        const maxLevels = 10;
+        let currentLevel = 1;
+        let score = 0;
+        let currentAnswer;
+        let selectedAnswerIndex = null;
+        let correctAnswersInRow = 0;
+
+        const questions = [
+            { question: "¿Cuál es el animal terrestre más rápido?", 
+              options: ["Tigre", "Elefante", "Guepardo", "León"], 
+              correctAnswer: "Guepardo", 
+              image: "https://static.nationalgeographicla.com/files/styles/image_3200/public/mm9949_220606_003149.webp?w=760&h=1140&p=right" },
+            { question: "¿Qué animal es conocido por su capacidad de cambiar de color?", 
+              options: ["Pulpo", "Camaleón", "Pez payaso", "Delfín"], 
+              correctAnswer: "Camaleón", 
+              image: "https://www.shutterstock.com/image-vector/chameleon-sitting-on-tree-branch-600nw-2431081091.jpg" },
+            { question: "¿Cuál es el mamífero más grande del mundo?", 
+              options: ["Elefante africano", "Ballena azul", "Jirafa", "Rinoceronte"], 
+              correctAnswer: "Ballena azul", 
+              image: "https://www.shutterstock.com/image-photo/blue-whale-isolated-on-white-600nw-2490997629.jpg" },
+            { question: "¿Cuántos corazones tiene un pulpo?", 
+              options: ["Uno", "Dos", "Tres", "Cuatro"], 
+              correctAnswer: "Tres", 
+              image: "https://static.vecteezy.com/system/resources/previews/038/265/330/non_2x/ai-generated-octopus-in-cartoon-style-on-transparent-background-free-png.png" },
+            { question: "¿Cuál de estos animales pone huevos?", 
+              options: ["Ballena", "Murciélago", "Ornitorrinco", "Delfín"], 
+              correctAnswer: "Ornitorrinco", 
+              image: "https://www.xlsemanal.com/wp-content/uploads/sites/3/2018/07/ornitorrinco-768x506.jpg" },
+            { question: "¿Qué ave no puede volar?", 
+              options: ["Águila", "Pato", "Pingüino", "Halcón"], 
+              correctAnswer: "Pingüino", 
+              image: "https://s1.elespanol.com/2023/11/28/enclave-ods/813179001_237982437_1706x960.jpg" },
+            { question: "¿Qué animal tiene el cerebro más grande en proporción a su cuerpo?", 
+              options: ["Delfín", "Hormiga", "Pez globo", "Pulpo"], 
+              correctAnswer: "Hormiga", 
+              image: "https://thumbs.dreamstime.com/b/rufa-del-formica-de-la-hormiga-en-hierba-20235275.jpg" },
+            { question: "¿Qué animal se considera el más venenoso?", 
+              options: ["Rana dardo dorada", "Serpiente coralillo", "Medusa caja", "Escorpión"], 
+              correctAnswer: "Medusa caja", 
+              image: "https://fotografias.lasexta.com/clipping/cmsimages02/2016/07/04/6500E72D-EB76-48FE-9D71-C94C6BEC0798/69.jpg?crop=2459,1383,x0,y166&width=1280&height=720&optimize=low&format=jpg" },
+            { question: "¿Cuál es el único mamífero que puede volar?", 
+              options: ["Murciélago", "Avestruz", "Pingüino", "Loro"], 
+              correctAnswer: "Murciélago", 
+              image: "https://i.pinimg.com/736x/d3/ac/43/d3ac43f1bd7ee9de63423cdd5b5e4722.jpg" },
+            { question: "¿Cuánto puede llegar a vivir una tortuga de las Galápagos?", 
+              options: ["100 años", "50 años", "175 años", "150 años"], 
+              correctAnswer: "175 años", 
+              image: "https://zoobarcelona.cat/sites/default/files/animal/2016-12/Chelonoidis%20nigra2.jpg" }
+        ];
+
+        const updateQuestion = () => {
+            let currentQuestion = questions[currentLevel - 1];
+            document.getElementById("question").textContent = currentQuestion.question;
+            document.getElementById("questionImage").src = currentQuestion.image;
+
+            // Mezclar las opciones
+            let options = [...currentQuestion.options];
+            let correctAnswer = currentQuestion.correctAnswer;
+            options.splice(options.indexOf(correctAnswer), 1); // Eliminar la respuesta correcta
+            options = [correctAnswer, ...options]; // Añadir la respuesta correcta a las opciones
+            options = shuffleArray(options); // Mezclar las opciones
+
+            // Asignar las opciones al HTML
+            let buttons = document.querySelectorAll(".option-button");
+            for (let i = 0; i < 4; i++) {
+                buttons[i].classList.remove("selected", "correct", "incorrect");
+                buttons[i].disabled = false;
+                buttons[i].textContent = options[i];
+            }
+
+            selectedAnswerIndex = null;
+            document.getElementById("submitMultipleChoice").disabled = true;
+            document.getElementById("result").textContent = "";
+        };
+
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
+            }
+            return array;
+        };
+
+        const selectAnswer = (index) => {
+            document.querySelectorAll(".option-button").forEach(button => button.classList.remove("selected"));
+            document.querySelectorAll(".option-button")[index].classList.add("selected");
+            selectedAnswerIndex = index;
+            document.getElementById("submitMultipleChoice").disabled = false;
+        };
+
+        const checkAnswer = () => {
+            let selectedButton = document.querySelectorAll(".option-button")[selectedAnswerIndex];
+            let currentQuestion = questions[currentLevel - 1];
+            const correctSound = document.getElementById("correctSound"); // Referencia al audio
+            const errorSound = document.getElementById("incorrectSound"); // Referencia al audio incorrecto
+
+            if (selectedButton.textContent === currentQuestion.correctAnswer) {
+                score += 10;
+                document.getElementById("result").textContent = "¡Correcto!";
+                document.getElementById("result").classList.add("correct");
+                selectedButton.classList.add("correct");
+                
+                correctSound.play();
+
+                correctAnswersInRow++;
+
+                // Avanzar de nivel solo si la respuesta es correcta
+                if (correctAnswersInRow >= 1) {
+                    setTimeout(() => {
+                        if (currentLevel < maxLevels) {
+                            currentLevel++;
+                            correctAnswersInRow = 0;
+                            document.getElementById("levelNumber").textContent = currentLevel;
+                            document.getElementById("scoreCount").textContent = score;
+                            updateQuestion();
+                        } else {
+                            endGame();
+                        }
+                    }, 1000);
+                }
+            } else {
+                document.getElementById("result").textContent = "Incorrecto.";
+                document.getElementById("result").classList.add("incorrect");
+                selectedButton.classList.add("incorrect");
+
+                errorSound.play();
+
+                // Reseteamos el contador si la respuesta es incorrecta
+                correctAnswersInRow = 0;
+            }
+        };
+
+        const endGame = () => {
+            document.getElementById("finalScore").textContent = `Tu puntuación final: ${score}`;
+            document.getElementById("gameOverModal").style.display = "flex";
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateQuestion();
+        });
+    </script>
+</body>
+</html>

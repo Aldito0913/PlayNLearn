@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Juego educativo de geografía mundial para niños de 10 a 12 años">
+        <title>Aventura Geográfica Mundial</title>
+        <link rel="stylesheet" href="sociales3.css">
+    </head>
+<body>
+    <header>
+        <h1>Aventura Geográfica Mundial</h1>
+        <p>¡Explora el mundo mientras aprendes!</p>
+    </header>
+
+    <div class="game-container">
+        <div id="question-container">
+            <h2 id="question-text"></h2>
+            <div class="options-container" id="options-container"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="next-button" id="next-button" style="display: none;">Siguiente Pregunta</button>
+        </div>
+        <div class="score">Puntuación: <span id="score">0</span> <span class="points-badge">+<span id="last-points">0</span> puntos</span></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Cuál es la capital de Vietnam?",
+                options: ["Argentina", "Hanoi", "Da Nang", "Bangkok"],
+                correctAnswer: 1,
+                points: 10,
+                explanation: "¡La capital de Vietnam es Hanoi!"
+            },
+            {
+                question: "¿En qué país se encuentra el Salar de Uyuni, el desierto de sal más grande del mundo?",
+                options: ["Siria", "Bolivia", "Chile", "Georgia"],
+                correctAnswer: 1,
+                points: 10,
+                explanation: "¡El Salar de Uyuni se encuentra en Bolivia!"
+            },
+            {
+                question: "¿Cuál es la capital de Canadá?",
+                options: ["Illinois", "Toronto", "Ottawa", "Vancouver"],
+                correctAnswer: 2,
+                points: 10,
+                explanation: "¡La capital de Canadá es Ottawa!"
+            },
+            {
+                question: "¿Qué volcán de El Salvador también es conocido como 'El Faro del Pacífico'?",
+                options: ["Volcán de izalco", "Volcán Chaparrastique", "Volcán de Tecapa", "Volcán de San Salvador"],
+                correctAnswer: 0,
+                points: 10,
+                explanation: "¡El volcán de Izalco, en El Salvador, es conocido como 'El Faro del Pacífico'!"
+            },
+            {
+                question: "¿Cuál es el océano más grande del mundo?",
+                options: ["Atlántico", "Índico", "Pacífico", "Ártico"],
+                correctAnswer: 2,
+                points: 10,
+                explanation: "¡El Océano Pacífico es el más grande y profundo de todos los océanos!"
+            },
+            {
+                question: "¿Qué país del mundo tiene más vecinos (fronteras terrestres)?",
+                options: ["India", "Kazajistán", "Rusia", "China"],
+                correctAnswer: 3,
+                points: 10,
+                explanation: "¡China comparte fronteras con 14 países!"
+            },
+            {
+                question: "¿Qué desierto es considerado el más seco del mundo?",
+                options: ["Desierto de Mojave", "Desierto de Atacama", "Desierto del Sahara", "Desierto Artantico"],
+                correctAnswer: 1,
+                points: 10,
+                explanation: "¡El desierto Artantico es considerado el más seco del mundo!"
+            },
+            {
+                question: "¿En qué departamento salvadoreño está ubicado el Cerro El Pital, el punto más alto del país?",
+                options: ["San Miguel", "Usulután", "Chalatenango", "Cabañas"],
+                correctAnswer: 2,
+                points: 10,
+                explanation: "¡El punto más alto del país se encuentra en Chalatenango!"
+            },
+            {
+                question: "¿En qué continente está la selva del Amazonas?",
+                options: ["África", "Asia", "América", "Oceanía"],
+                correctAnswer: 2,
+                points: 10,
+                explanation: "¡La selva del Amazonas está en Sudamérica y es la selva tropical más grande del mundo!"
+            },
+            {
+                question: "¿Cuál es la capital de Francia?",
+                options: ["Londres", "Madrid", "Roma", "París"],
+                correctAnswer: 3,
+                points: 10,
+                explanation: "¡París es la capital de Francia y es conocida como la Ciudad de la Luz!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let lastPoints = 0;
+        let hasAnswered = false;
+
+        function displayQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById('question-text').textContent = questionData.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            questionData.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('last-points').textContent = '0';
+            hasAnswered = false;
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (hasAnswered) return;
+            
+            hasAnswered = true;
+            const questionData = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-button');
+            
+            buttons.forEach((button, index) => {
+                if (index === questionData.correctAnswer) {
+                    button.classList.add('correct');
+                }
+                if (index === selectedIndex && index !== questionData.correctAnswer) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === questionData.correctAnswer) {
+                lastPoints = questionData.points;
+                score += lastPoints;
+                document.getElementById('feedback').textContent = '¡Correcto! ' + questionData.explanation;
+                document.getElementById('feedback').style.color = '#2e7d32';
+            } else {
+                lastPoints = 0;
+                document.getElementById('feedback').textContent = 'No es correcto. ' + questionData.explanation;
+                document.getElementById('feedback').style.color = '#c62828';
+            }
+
+            document.getElementById('score').textContent = score;
+            document.getElementById('last-points').textContent = lastPoints;
+            document.getElementById('next-button').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                displayQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function showFinalScore() {
+            const maxScore = questions.reduce((sum, q) => sum + q.points, 0);
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <h2>¡Aventura Completada!</h2>
+                <p class="score">Puntuación final: ${score} de ${maxScore} puntos posibles</p>
+                <p>${getFeedbackMessage(score, maxScore)}</p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="next-button" onclick="location.reload()">¡Jugar de nuevo!</button>
+                    <button class="next-button" onclick="window.location.href='sociales.html'" style="background-color: #1565c0;">Volver al Inicio</button>
+                </div>
+            `;
+        }
+
+        function getFeedbackMessage(score, maxScore) {
+            const percentage = (score / maxScore) * 100;
+            if (percentage >= 80) {
+                return "¡Eres un experto geógrafo! ¡Felicitaciones! 🌟🗺️";
+            } else if (percentage >= 60) {
+                return "¡Buen trabajo! Conoces muy bien la geografía mundial 🌍";
+            } else {
+                return "¡Sigue aprendiendo sobre nuestro maravilloso mundo! 🌎";
+            }
+        }
+
+        document.getElementById('next-button').onclick = nextQuestion;
+        displayQuestion();
+    </script>
+</body>
+</html>

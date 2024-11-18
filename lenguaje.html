@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Juegos educativos de lenguaje para niños de 7 a 12 años. Aprender vocabulario mientras juegan.">
     <title>Juegos de Lenguaje para Niños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #FFEB3B; /* Color amarillo suave */
             margin: 0;
             padding: 0;
             animation: fadeIn 1s ease-in-out;
+            color: #2F3E46;
         }
 
         @keyframes fadeIn {
@@ -28,7 +30,7 @@
             color: white;
             padding: 20px;
             text-align: center;
-            border-bottom: 5px solid #FF5722; /* Color rojo anaranjado */
+            border-bottom: 5px solid #FF5722;
         }
 
         header h1 {
@@ -45,22 +47,59 @@
             text-align: center;
         }
 
-        .game-container {
-            margin: 20px 0;
-            border: 2px dashed #FF9800;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #FFF3E0; /* Color de fondo suave */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .action-container {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #FFF3E0;
+        .card {
+            border: 2px solid #FF9800;
             border-radius: 10px;
-            border: 2px dashed #FF9800;
+            padding: 15px;
+            background-color: #FFF3E0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .word-game-button, .back-button {
+            background: linear-gradient(45deg, #FFC107, #FFEB3B);
+            color: #2F3E46;
+            border-radius: 20px;
+            padding: 14px 30px;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .word-game-button:hover, .back-button:hover {
+            background: linear-gradient(45deg, #FFEB3B, #FFC107);
+            color: white;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button {
+            background-color: #FF5722;
+            color: #FFF;
+            animation: vibrate 0.3s infinite alternate;
         }
 
         footer {
@@ -68,73 +107,22 @@
             color: white;
             text-align: center;
             padding: 10px 0;
-            position: relative;
             width: 100%;
             margin-top: 20px;
         }
 
-        .word-game-button, .back-button {
-            background-color: #FFEB3B;
-            color: #2F3E46;
-            border-radius: 10px;
-            padding: 14px 30px;
-            font-size: 1.3em;
-            text-transform: uppercase;
-            cursor: pointer;
-            border: 2px solid #FFC107;
-            transition: all 0.3s ease;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-            text-decoration: none;
-        }
-
-        .word-game-button:hover, .back-button:hover {
-            background-color: #FFC107;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Efecto de vibración para llamar la atención */
         @keyframes vibrate {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-2px); }
             40%, 80% { transform: translateX(2px); }
         }
 
-        .back-button {
-            font-size: 1.5em;
-            background-color: #FF5722; /* Color rojo para destacar */
-            color: #FFF;
-            margin-top: 20px;
-            border: 2px solid #FF5722;
-            animation: vibrate 0.3s infinite alternate;
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
         }
-
-        .gif-image {
-            vertical-align: middle;
-            width: 60px;
-            height: auto;
-            transition: transform 0.3s ease; /* Efecto de transición suave */
-        }
-
-        /* Efecto de agrandamiento al pasar el cursor */
-        .gif-image:hover {
-            transform: scale(2); /* Agranda el GIF al doble de su tamaño original */
-        }
-
-        .word-action {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        .word-action img {
-            width: 100px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
     </style>
 </head>
 <body>
@@ -145,56 +133,49 @@
 
     <section>
         <h2>¡Adivina la Palabra!</h2>
-        <div class="game-container">
-            <h3>¡Es hora de jugar!</h3>
-            <p>¿Sabías que en El Salvador hay palabras muy divertidas y únicas? ¡Te las vamos a enseñar mientras juegas!</p>
-            <p>Este juego es súper divertido y educativo. Vas a descubrir palabras nuevas que usamos en El Salvador, como:</p>
-            <ul>
-                <li><strong>Güiro:</strong> Un instrumento musical que suena como un tambor.</li>
-                <li><strong>Chelito:</strong> Un apodo cariñoso para una persona de piel clara.</li>
-                <li><strong>Chucho:</strong> ¡Así le decimos a un perrito!</li>
-            </ul>
-            <p>En este juego, te daremos pistas sobre una palabra, y tú tendrás que adivinarla. Cada vez que adivines una palabra, ganarás puntos. ¡Cada palabra es un reto, pero también una oportunidad de aprender algo nuevo!</p>
-            <p>Así que prepárate para ponerte creativo, ¡y que comience la diversión!</p>
-
-            <!-- Colocar el GIF al lado del botón -->
-            <button class="word-game-button" onclick="window.location.href='adivinalengua.html'">¡Jugar Adivina la Palabra!</button>
-            <img src="/imagenes/teclado.gif" alt="Teclado GIF" class="gif-image">
+        <div class="card-container">
+            <div class="card">
+                <img src="/imagenes/guiro.gif" alt="Güiro">
+                <h3>Güiro</h3>
+                <p>Un instrumento musical que suena como un tambor. ¡Perfecto para la fiesta!</p>
+            </div>
+            <div class="card">
+                <img src="/imagenes/chelito.jpg" alt="Chelito">
+                <h3>Chelito</h3>
+                <p>Un apodo cariñoso para una persona de piel clara.</p>
+            </div>
+            <div class="card">
+                <img src="/imagenes/chucho.jpg" alt="Chucho">
+                <h3>Chucho</h3>
+                <p>¡Así le decimos a un perrito en El Salvador!</p>
+            </div>
         </div>
 
-        <!-- Sección de Palabra en Acción -->
-        <div class="action-container">
-            <h3>Palabra en Acción</h3>
-            <p>Veamos cómo se usan algunas palabras de El Salvador en contextos divertidos:</p>
+        <button class="word-game-button" onclick="window.location.href='adivinalengua.html'">¡Jugar Adivina la Palabra!</button>
+    </section>
 
-            <!-- Acción de la palabra 'Güiro' -->
-            <div class="word-action">
+    <section>
+        <h2>Palabra en Acción</h2>
+        <p>Veamos cómo se usan algunas palabras de El Salvador en contextos divertidos:</p>
+        <div class="card-container">
+            <div class="card">
                 <img src="/imagenes/guiro.gif" alt="Güiro" />
                 <p><strong>Güiro:</strong> El güiro suena fuerte durante la fiesta. ¡A todos les encanta su ritmo!</p>
             </div>
-
-            <!-- Acción de la palabra 'Chelito' -->
-            <div class="word-action">
+            <div class="card">
                 <img src="/imagenes/chelito.jpg" alt="Chelito" />
                 <p><strong>Chelito:</strong> Mi amigo Pedro es muy chelito, siempre tiene la piel más clara que los demás.</p>
             </div>
-
-            <!-- Acción de la palabra 'Chucho' -->
-            <div class="word-action">
+            <div class="card">
                 <img src="/imagenes/chucho.jpg" alt="Chucho" />
                 <p><strong>Chucho:</strong> Mi chucho siempre me sigue por toda la casa, ¡es el mejor amigo que uno puede tener!</p>
             </div>
-
-            <!-- Nuevo botón para ver más palabras en acción -->
-            <a href="palabraenaccion.html" class="word-game-button">¡Juega a Palabras en Acción!</a>
-
-            <!-- Aquí colocamos el nuevo GIF de acción -->
-            <img src="/imagenes/accion.gif" alt="Acción GIF" class="gif-image">
         </div>
 
-        <!-- Botón de Volver al Inicio -->
-        <a href="index.html" class="back-button">⬅️ Volver al Inicio</a>
+        <a href="palabraenaccion.html" class="word-game-button">¡Juega a Palabras en Acción!</a>
     </section>
+
+    <a href="index.html" class="back-button">⬅️ Volver al Inicio</a>
 
     <footer>
         <p>&copy; 2024 Juegos de Lenguaje - ¡Jugamos y aprendemos!</p>

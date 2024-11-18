@@ -3,188 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Información sobre la cultura salvadoreña">
-    <title>Cultura Salvadoreña</title>
+    <title>Partículas Interactivas</title>
     <style>
-        /* Estilos generales */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #e0f7fa;
-            color: #333;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            overflow: hidden;
+            background-color: #121212; /* Fondo oscuro */
         }
 
-        /* Encabezado */
-        header {
-            background-color: #00897b;
-            color: white;
-            padding: 30px;
-            text-align: center;
-            border-bottom: 5px solid #4caf50;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Asegura que esté en el fondo */
         }
 
-        header h1 {
-            font-size: 2.5em;
-            text-shadow: 2px 2px #4caf50;
-            animation: bounceIn 1.5s ease-in-out;
-        }
-
-        /* Sección principal */
-        section {
-            padding: 40px 20px;
-            background-color: #e0f2f1;
-            border-top: 3px dashed #4caf50;
-        }
-
-        h2 {
-            color: #00897b;
-            text-align: center;
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px #4caf50;
-            animation: fadeIn 1.2s ease-in-out;
-        }
-
-        h3 {
-            color: #444;
-            font-size: 1.8em;
-            margin-top: 30px;
-        }
-
-        p {
-            font-size: 1.2em;
-            color: #555;
-            text-align: justify;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            animation: fadeInUp 1.5s ease-in-out;
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounceIn {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
-
-        /* Imagenes y estilos adicionales */
-        section img {
-            display: block;
-            margin: 0 auto 20px;
-            width: 60%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.4s ease-in-out;
-        }
-
-        section img:hover {
-            transform: scale(1.1);
-        }
-
-        /* Botón */
         .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin-top: 30px;
-            font-size: 1.5em;
-            color: white;
-            background-color: #00897b;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #00ff00;
+            color: #121212;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0px 5px 10px rgba(0, 255, 0, 0.3);
         }
 
         .btn:hover {
-            background-color: #4caf50;
-            transform: scale(1.05);
-        }
-
-        /* Estilo del texto resaltado */
-        .highlight {
-            background-color: #4caf50;
-            padding: 8px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-
-        /* Pie de página */
-        footer {
-            background-color: #00897b;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            border-top: 5px solid #4caf50;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 14px 24px;
-            border-radius: 30px;
-            background: linear-gradient(45deg, #009688, #4caf50);
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        footer a:hover {
-            background: linear-gradient(45deg, #4caf50, #009688);
-            transform: scale(1.1);
+            background-color: #008000;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
 <body>
-    <header>
-        <h1>¡Cultura Salvadoreña!</h1>
-    </header>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
 
-    <section>
-        <h2>Descubre El Salvador</h2>
-        <p>El Salvador es pequeño, pero su cultura es gigante. Con una mezcla de colores, sabores y música, este país centroamericano tiene mucho que ofrecer.</p>
-        
-        <h3>Arte y Artesanías</h3>
-        <p>Los artesanos salvadoreños crean piezas llenas de vida, como las <span class="highlight">máscaras coloridas</span> y <span class="highlight">textiles llenos de detalles</span>. ¡Todo hecho a mano con mucho amor!</p>
-        <img src="imagenes/artes.jpg" alt="Máscaras y textiles tradicionales salvadoreños">
-        
-        <h3>Gastronomía</h3>
-        <p>¡Las <span class="highlight">pupusas</span> son las reinas de la cocina! Estas tortillas rellenas son deliciosas y están hechas para disfrutar en cualquier ocasión. ¿Te atreves a probarlas?</p>
-        <img src="imagenes/gastronomia.jpg" alt="Pupusas, el platillo típico de El Salvador">
-        
-        <h3>Festividades y Tradiciones</h3>
-        <p>El <span class="highlight">Día de los Farolitos</span> ilumina las calles de Ahuachapán con farolitos mágicos que llenan de luz y color cada rincón.</p>
-        <p>También está el <span class="highlight">Día de la Independencia</span>, lleno de desfiles y música. ¡Es una gran fiesta!</p>
-        <img src="imagenes/tradiciones.jpg" alt="Farolitos en Ahuachapán durante una festividad">
+    <!-- Botón para regresar al index -->
+    <button class="btn" onclick="location.href='index.html'">Regresar al Inicio</button>
 
-        <h3>Música y Danza</h3>
-        <p>¡A bailar! Los salvadoreños disfrutan al ritmo de la <span class="highlight">cumbia</span> y la <span class="highlight">marimba</span>, moviéndose alegremente con bailes típicos como el <span class="highlight">Torito Pinto</span>.</p>
-        <img src="imagenes/musica.jpg" alt="Bailarines salvadoreños en trajes tradicionales">
-
-        <button class="btn" onclick="window.location.href='https://iberculturaviva.org/el-salvador/?lang=es'">¡Aprende más!</button>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
-        <a href="index.html">Regresar al Inicio</a>
-    </footer>
+    <script src="cultura.js"></script>
 </body>
 </html>
-
-
-

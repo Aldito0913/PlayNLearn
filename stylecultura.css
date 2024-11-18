@@ -1,0 +1,77 @@
+/* Estilo general */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh; /* El cuerpo ocupa toda la altura de la ventana */
+    background-color: #121212; /* Fondo oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif; /* Fuente legible y moderna */
+    color: #fff; /* Texto en blanco por si se agrega contenido */
+}
+
+/* Fondo de partículas */
+#particles-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Asegura que las partículas estén detrás de cualquier otro contenido */
+}
+
+/* Estilo para el botón flotante */
+.btn-floating {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #00ff00, #008000); /* Gradiente verde brillante */
+    color: #121212; /* Texto oscuro para buen contraste */
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 50px; /* Botón completamente redondeado */
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0, 255, 0, 0.4); /* Sombra más llamativa */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.3s ease-in-out;
+    animation: bounce 1.8s infinite; /* Animación de rebote más suave */
+}
+
+/* Efecto de rebote del botón */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px); /* Rebote más notable */
+    }
+}
+
+/* Efecto al pasar el cursor por encima */
+.btn-floating:hover {
+    transform: translateY(-10px) scale(1.1); /* Sube y agranda ligeramente el botón */
+    box-shadow: 0 8px 20px rgba(0, 255, 0, 0.6); /* Sombra más pronunciada */
+    background: linear-gradient(135deg, #008000, #00ff00); /* Inversión del gradiente */
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .btn-floating {
+        padding: 12px 25px; /* Reduce el tamaño del botón */
+        font-size: 1em;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px); /* Rebote menos pronunciado en dispositivos pequeños */
+        }
+    }
+}
+

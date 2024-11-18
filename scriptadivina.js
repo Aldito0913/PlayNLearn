@@ -11,12 +11,15 @@ let palabraActualIndex = 0;
 let palabraOculta = palabras[palabraActualIndex].palabra;
 let pistaActual = palabras[palabraActualIndex].pista;
 let letrasAdivinadas = Array(palabraOculta.length).fill("_");
+let palabraContada = 0; // Contador de palabras adivinadas
 
 // Selecciona los elementos necesarios en el HTML
 const wordLettersContainer = document.querySelector(".word-letters");
 const teclas = document.querySelectorAll(".key");
 const feedback = document.querySelector(".feedback p");
 const hintText = document.querySelector(".hint-text");
+const modal = document.getElementById("congratulationsModal");
+const redirectButton = document.getElementById("redirect-btn");
 
 // Generar espacios en blanco según la longitud de la palabra actual
 function generarEspacios() {
@@ -64,8 +67,16 @@ function adivinarLetra(letra) {
     
     actualizarPalabra();
 
+    // Si todas las letras de la palabra han sido adivinadas
     if (!letrasAdivinadas.includes("_")) {
-        setTimeout(siguientePalabra, 1000);
+        palabraContada++; // Incrementar contador de palabras adivinadas
+
+        // Si el jugador ha completado todas las palabras
+        if (palabraContada === palabras.length) {
+            mostrarModal(); // Mostrar el modal
+        } else {
+            setTimeout(siguientePalabra, 1000); // Cambiar a la siguiente palabra
+        }
     }
 }
 
@@ -82,7 +93,12 @@ function siguientePalabra() {
     teclas.forEach((tecla) => tecla.disabled = false); // Habilitar todas las teclas
 }
 
-// Animación de la tecla presionada
+// Mostrar el modal de felicitaciones
+function mostrarModal() {
+    modal.classList.add("show"); // Agrega la clase 'show' para hacer visible el modal
+}
+
+// Función para animar la tecla presionada
 function animarTecla(tecla) {
     tecla.classList.add("pressed");
     setTimeout(() => tecla.classList.remove("pressed"), 200);
@@ -112,3 +128,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
+// Redirigir al usuario a lenguaje.html cuando hace clic en "Volver al Inicio"
+redirectButton.addEventListener("click", () => {
+    window.location.href = "lenguaje.html"; // Redirige a lenguaje.html
+});

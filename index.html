@@ -6,19 +6,23 @@
     <meta name="description" content="Juegos educativos para niños de 7 a 12 años y cultura salvadoreña">
     <title>PLAYNLEARN</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-
+        /* Estilos generales */
         body {
             font-family: 'Fredoka One', sans-serif;
-            background: linear-gradient(135deg, #a0c4ff 0%, #3a86ff 100%);
             margin: 0;
             padding: 0;
             overflow-x: hidden;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+        /* Fondo animado */
+        #spiderCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Colocar detrás del contenido */
+            background: linear-gradient(135deg, #a0c4ff 0%, #3a86ff 100%);
         }
 
         header {
@@ -32,7 +36,6 @@
         header h1 {
             font-size: 3.5em;
             margin: 0;
-            color: #ffffff;
             text-shadow: 2px 2px 4px #3a86ff;
         }
 
@@ -62,7 +65,6 @@
         section {
             padding: 40px;
             text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
         }
 
         h2 {
@@ -152,18 +154,6 @@
             transform: scale(1.1);
         }
 
-        /* Hover effects for each game button */
-        .game-card:nth-child(1):hover { background-color: #0501f8; color: white; } /* Matemáticas */
-        .game-card:nth-child(2):hover { background-color: #ff4a4a; color: white; } /* Lenguaje */
-        .game-card:nth-child(3):hover { background-color: #f7e600; color: white; } /* Ciencias */
-        .game-card:nth-child(4):hover { background-color: #4bde2e; color: white; } /* Sociales */
-
-        /* Colors inspired by the Torogoz */
-        .game-card:nth-child(6):hover { 
-            background: linear-gradient(135deg, #a0c4ff, #06d6a0, #ffd166, #3a86ff);
-            color: #003049;
-        }
-
         @media (max-width: 768px) {
             .game-card { width: 90%; }
             h2 { font-size: 2.2em; }
@@ -173,6 +163,7 @@
     </style>
 </head>
 <body>
+    <canvas id="spiderCanvas"></canvas>
     <header>
         <h1>Aprende Jugando</h1>
         <p>¡Diviértete aprendiendo con juegos educativos y cultura salvadoreña!</p>
@@ -184,37 +175,38 @@
 
     <section id="juegos">
         <h2>¡Explora Nuestros Juegos!</h2>
-
+        <!-- Tarjetas de juegos -->
         <a href="matematicas.html" class="game-card">
             <img src="imagenes/mate.jpg" alt="Juego de Matemáticas">
             <h3>Matemáticas</h3>
             <p>Resuelve acertijos numéricos y diviértete con problemas matemáticos.</p>
         </a>
-
+    
         <a href="lenguaje.html" class="game-card">
             <img src="imagenes/lenguaje.jpg" alt="Juego de Lenguaje">
             <h3>Lenguaje</h3>
             <p>Mejora tus habilidades de lectura y escritura jugando.</p>
         </a>
-
+    
         <a href="ciencias.html" class="game-card">
             <img src="imagenes/ciencias.jpg" alt="Juego de Ciencias">
             <h3>Ciencias</h3>
             <p>Explora el mundo de la ciencia con divertidas actividades interactivas.</p>
         </a>
-
+    
         <a href="sociales.html" class="game-card">
             <img src="imagenes/sociales.jpg" alt="Juego de Ciencias Sociales">
             <h3>Sociales</h3>
             <p>Aprende sobre historia y geografía jugando.</p>
         </a>
-
+    
         <a href="quiz.html" class="game-card">
             <img src="imagenes/cultura.jpg" alt="Juego de Cultura">
             <h3>Nuestra Raíz</h3>
             <p>Descubre y aprende sobre nuestra rica cultura e historia.</p>
         </a>
     </section>
+    
 
     <footer>
         <p>&copy; 2024 Aprende Jugando - Todos los derechos reservados</p>
@@ -222,11 +214,109 @@
     </footer>
 
     <div class="back-to-top" onclick="scrollToTop()">↑</div>
-
     <script>
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Script del fondo animado
+        const canvas = document.getElementById("spiderCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    
+        const spiders = [];
+        const maxSpiders = 270;
+        const mouse = { x: null, y: null, radius: 100 };
+    
+        class Spider {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * 1.5 - 0.75;
+            }
+    
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+    
+                // Rebote en los bordes
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    
+                // Interacción con el mouse
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (mouse.radius - distance) / mouse.radius;
+                    const forceX = Math.cos(angle) * force;
+                    const forceY = Math.sin(angle) * force;
+    
+                    this.speedX -= forceX;
+                    this.speedY -= forceY;
+                }
+            }
+    
+            draw() {
+                ctx.fillStyle = "black";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
+    
+        function connectSpiders() {
+            for (let a = 0; a < spiders.length; a++) {
+                for (let b = a + 1; b < spiders.length; b++) {
+                    const dx = spiders[a].x - spiders[b].x;
+                    const dy = spiders[a].y - spiders[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 150) {
+                        ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(spiders[a].x, spiders[a].y);
+                        ctx.lineTo(spiders[b].x, spiders[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+    
+        for (let i = 0; i < maxSpiders; i++) {
+            spiders.push(new Spider());
+        }
+    
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            spiders.forEach(spider => {
+                spider.update();
+                spider.draw();
+            });
+            connectSpiders();
+            requestAnimationFrame(animate);
+        }
+    
+        animate();
+    
+        // Ajustar tamaño del canvas al redimensionar la ventana
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    
+        // Detectar movimiento del mouse
+        window.addEventListener("mousemove", event => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+    
+        // Reiniciar posición del mouse cuando se sale de la ventana
+        window.addEventListener("mouseout", () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
     </script>
+    
 </body>
 </html>
