@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión y Progreso</title>
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styleusuario.css">
+    <style>
+        /* Estilo general */
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 10s ease infinite;
+            color: #333;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h3 {
+            text-align: center;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            font-size: 26px;
+        }
+
+        .subjects-container {
+            margin: 30px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .subject-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #3498db;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #eaeaea;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 25px;
+            width: 0;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            text-align: center;
+            line-height: 25px;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 10px 0 0 10px;
+            animation: fillProgress 2s ease-out forwards;
+        }
+
+        @keyframes fillProgress {
+            0% { width: 0; }
+            100% { width: inherit; }
+        }
+
+        button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #ff3d2e;
+            transform: scale(1.05);
+        }
+
+        #activeUser {
+            text-align: center;
+            margin: 20px;
+            font-size: 18px;
+            color: #fff;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        #cursorEffect {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #fbc2eb, #a6c1ee);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+            transform: scale(1);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        button:active {
+            animation: bounce 0.4s;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Usuario activo -->
+<div id="activeUser">Cargando usuario...</div>
+
+<!-- Contenedor de progreso -->
+<div class="subjects-container">
+    <h3>Progreso de Asignaturas</h3>
+    <div id="math">
+        <p class="subject-title">Matemáticas</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 80%;">80%</div>
+        </div>
+    </div>
+    <div id="socials">
+        <p class="subject-title">Sociales</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 70%;">70%</div>
+        </div>
+    </div>
+    <div id="language">
+        <p class="subject-title">Lenguaje</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 90%;">90%</div>
+        </div>
+    </div>
+    <div id="science">
+        <p class="subject-title">Ciencias</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 60%;">60%</div>
+        </div>
+    </div>
+    <div id="quiz">
+        <p class="subject-title">Quiz</p>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: 50%;">50%</div>
+        </div>
+    </div>
+</div>
+
+<!-- Botones -->
+<button id="homeButton">Ir a Inicio</button>
+<button id="logoutButton">Cerrar Sesión</button>
+
+<!-- Cursor personalizado -->
+<div id="cursorEffect"></div>
+
+<script>
+// Función para mostrar al usuario activo
+const activeUserDisplay = document.getElementById("activeUser");
+const userSession = localStorage.getItem("activeUser");
+
+if (userSession) {
+    const activeUser = JSON.parse(userSession);
+    activeUserDisplay.innerHTML = `<p><strong>Usuario:</strong> ${activeUser.username}</p><p><strong>Correo Electrónico:</strong> ${activeUser.email}</p>`;
+} else {
+    activeUserDisplay.textContent = "No hay un usuario activo.";
+}
+
+// Botón de inicio
+document.getElementById("homeButton").addEventListener("click", () => {
+    window.location.href = "index.html";
+});
+
+// Botón de cerrar sesión
+document.getElementById("logoutButton").addEventListener("click", () => {
+    localStorage.removeItem("activeUser");
+    window.location.href = "login.html";
+});
+
+// Cursor personalizado
+const cursor = document.getElementById("cursorEffect");
+
+document.addEventListener("mousemove", (e) => {
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.left = `${e.clientX}px`;
+});
+
+document.addEventListener("mouseout", () => {
+    cursor.style.opacity = "0";
+});
+
+document.addEventListener("mouseover", () => {
+    cursor.style.opacity = "1";
+});
+</script>
+
+</body>
+</html>
+

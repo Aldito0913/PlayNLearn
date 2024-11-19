@@ -1,0 +1,164 @@
+/* Estilo global */
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(45deg, #ff6f61, #fce7f3, #3498db);
+    background-size: 600% 600%;
+    animation: gradientBackground 10s ease infinite;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    color: #fff;
+}
+
+/* Animación de fondo */
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Estilo para el cursor personalizado */
+#cursorEffect {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: #ffeb3b; /* Amarillo brillante */
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    opacity: 0.8;
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+}
+
+/* Estilo para las barras de progreso */
+.progress-container {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 20px;
+    width: 0;
+    background-color: #3498db;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
+    transition: width 1s ease-out; /* Animación para el progreso */
+}
+
+/* Títulos de las asignaturas */
+.subject-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.subjects-container {
+    margin-top: 30px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    animation: fadeIn 2s ease;
+}
+
+/* Botones con interacción divertida */
+button {
+    padding: 12px 20px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+    font-size: 18px;
+    margin: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #ff5722;
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animación para el texto de usuario */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Interactividad para el contenedor de usuario */
+#activeUser {
+    margin-top: 20px;
+    font-size: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+#activeUser p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+/* Efecto de "rebote" en botones */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Efecto de transición para el texto de usuario */
+#activeUser p:hover {
+    color: #ffeb3b;
+    text-decoration: underline;
+}
+
+/* Efecto de cursor animado */
+#cursorEffect {
+    transform: scale(1.5);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
+    box-shadow: 0 0 25px rgba(255, 235, 59, 0.8);
+}
+
+/* Fondo animado para el sitio */
+#activeUser {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto de onda para el cursor al pasar por encima de los botones */
+button:hover {
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

@@ -171,7 +171,65 @@
 
     <nav>
         <a href="Cultura.html">Cultura</a>
+        <a href="usuarios.html" id="usuariosButton">Usuarios</a>
     </nav>
+    
+    <style>
+        nav a {
+            color: white;
+            background: linear-gradient(90deg, #ff6f61, #2d5bbe);
+            padding: 15px 25px;
+            margin: 0 10px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        nav a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, #4096e6, #ff6f61);
+        }
+    
+        #usuariosButton {
+            background: linear-gradient(90deg, #4361ee, #990f0f);
+            padding: 15px 35px;
+            font-size: 1.2em;
+            border-radius: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+    
+        #usuariosButton:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(90deg, #3a86ff, #e0437f);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    
+        footer a {
+            background: linear-gradient(90deg, #a0c4ff, #4361ee);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            text-transform: uppercase;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+    
+        footer a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(90deg, #4361ee, #a0c4ff);
+        }
+    </style>
+    
+    
 
     <section id="juegos">
         <h2>¡Explora Nuestros Juegos!</h2>

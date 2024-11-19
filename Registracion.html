@@ -76,9 +76,18 @@
                 return;
             }
 
-            // Guardar datos en LocalStorage
-            const userData = { username, email, password };
-            localStorage.setItem('user', JSON.stringify(userData));
+            // Recuperar datos de usuarios guardados
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Verificar si el usuario ya existe
+            if (users.some(user => user.username === username)) {
+                alert('El nombre de usuario ya está registrado.');
+                return;
+            }
+
+            // Agregar el nuevo usuario al array
+            users.push({ username, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
 
             alert('Registro exitoso. Ahora puedes iniciar sesión.');
             window.location.href = 'login.html';
