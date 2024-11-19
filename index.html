@@ -170,7 +170,6 @@
     </header>
 
     <nav>
-        <a href="Cultura.html">Cultura</a>
         <a href="usuarios.html" id="usuariosButton">Usuarios</a>
     </nav>
     
@@ -212,7 +211,7 @@
         }
     
         footer a {
-            background: linear-gradient(90deg, #a0c4ff, #4361ee);
+            background: linear-gradient(90deg, #020202, #4361ee);
             color: white;
             padding: 10px 25px;
             border-radius: 30px;
@@ -225,10 +224,133 @@
         footer a:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(90deg, #4361ee, #a0c4ff);
+            background: linear-gradient(90deg, #a15224, #0c054b);
+        }
+
+        .video-library {
+            padding: 20px 40px;
+            margin-bottom: 20px;
+        }
+        
+        .video-card {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .play-icon {
+            width: 100%;
+            height: 100%;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .video-content {
+            flex-grow: 1;
+            color: white;
+            text-align: left;
+        }
+        
+        .video-content h2 {
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
+            color: white;
+        }
+        
+        .video-content p {
+            font-size: 1.2em;
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+        }
+        
+        .video-button {
+            display: inline-block;
+            background-color: white;
+            color: #4361ee;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .video-button:hover {
+            background-color: #a0c4ff;
+            color: #3a0ca3;
+            transform: scale(1.05);
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .video-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+        
+            .video-content {
+                text-align: center;
+            }
+        
+            .video-icon {
+                width: 80px;
+                height: 80px;
+            }
+        
+            .video-content h2 {
+                font-size: 2em;
+            }
         }
     </style>
     
+    <section class="video-library">
+        <div class="video-card">
+            <div class="video-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="play-icon">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+            </div>
+            <div class="video-content">
+                <h2>¡Explora Nuestra Biblioteca de Videos!</h2>
+                <p>Descubre contenido educativo fascinante y divertido</p>
+                <a href="Cultura.html" class="video-button">Ver Videos</a>
+            </div>
+        </div>
+    </section>
     
 
     <section id="juegos">

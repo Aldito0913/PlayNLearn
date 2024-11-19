@@ -1,0 +1,275 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0094d1, #ffffff); /* Gradiente azul-blanco como la bandera */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh; /* Cambiar a min-height para permitir más espacio */
+    margin: 0;
+    color: #333; /* Color de texto oscuro para mejor contraste */
+    overflow-x: hidden; /* Evitar desplazamiento horizontal */
+}
+
+/* Estilo para el encabezado */
+header {
+    width: 100%;
+    background-color: #1e3a8a; /* Azul profundo de la bandera de El Salvador */
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* Sombra suave para darle profundidad */
+    font-family: 'Poppins', sans-serif; /* Tipografía redonda y amigable */
+    position: relative;
+    color: #ffffff; /* Texto blanco para destacar */
+}
+
+/* Título dentro del header */
+header h1 {
+    font-size: 3rem; /* Tamaño grande para resaltar */
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 10px 0;
+    color: #fbbf24; /* Amarillo brillante para resaltar */
+    animation: bounce 1s ease infinite; /* Efecto de rebote animado */
+}
+
+/* Efecto de hover */
+header h1:hover {
+    color: #f59e0b; /* Cambia a un amarillo más oscuro al pasar el ratón */
+    transform: scale(1.1); /* Aumento ligero al pasar el ratón */
+    transition: all 0.3s ease;
+}
+
+/* Animación de rebote */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Barra inferior con colores de la bandera */
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #1e3a8a, #ffffff, #fbbf24); /* Azul, blanco, amarillo */
+    border-radius: 5px;
+}
+
+/* Estilo del contenedor del juego */
+.game-container {
+    background: linear-gradient(145deg, #fbbf24, #0094d1); /* Degradado amarillo-azul */
+    padding: 5%; /* Reduce un poco el padding para mayor espacio entre cartas */
+    border-radius: 15px; /* Bordes más redondeados */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3), inset 0px 0px 15px rgba(255, 255, 255, 0.2); /* Sombra exterior e interior */
+    width: 90%;
+    max-width: 450px;
+    margin-top: 40px; /* Mantener separación con el encabezado */
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px; /* Más espacio entre las cartas */
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    animation: glow 2s infinite alternate; /* Animación de brillo */
+}
+
+/* Efecto de brillo sutil para el contenedor */
+@keyframes glow {
+    0% {
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3), inset 0px 0px 10px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), inset 0px 0px 20px rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Estilo de las cartas */
+.card {
+    width: 100%;
+    height: 100px; /* Aumenta el tamaño para mayor visibilidad */
+    background: linear-gradient(145deg, #0094d1, #1e3a8a); /* Degradado azul profundo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px; /* Bordes más redondeados */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Animaciones suaves */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Efecto al pasar el cursor */
+.card:hover {
+    transform: scale(1.05); /* Aumento sutil */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Sombra más profunda */
+}
+
+/* Contenido visible de la carta */
+.card .card-content {
+    background: #0094d1;
+}
+
+/* Cara posterior de la carta */
+.card .card-back {
+    background: linear-gradient(145deg, #d3d3d3, #a9a9a9); /* Degradado gris */
+}
+
+
+/* Animación de voltear */
+.card.flipped {
+    transform: rotateY(180deg);
+    background-color: #d3d3d3;
+}
+
+/* Estilo para la imagen dentro de la carta */
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
+
+/* Ajuste para las imágenes dentro de las cartas */
+img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+/* Estilo de los botones */
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #ffc400; /* Amarillo El Salvador para los botones */
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #e0a700; /* Sombra más oscura del amarillo */
+}
+
+/* Estilo del modal de felicitaciones */
+.modal {
+    position: fixed;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste perfecto al centro */
+    width: 80%;
+    max-width: 450px;
+    background: linear-gradient(145deg, #0094d1, #fbbf24); /* Degradado azul-amarillo */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    visibility: hidden; /* Oculto por defecto */
+    opacity: 0; /* Transparente por defecto */
+    transition: visibility 0.3s ease, opacity 0.3s ease, transform 0.3s ease; /* Suaviza la transición */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3), inset 0px 0px 15px rgba(255, 255, 255, 0.2); /* Sombras */
+    animation: modal-glow 2s infinite alternate; /* Animación de brillo */
+}
+
+/* Estilo del contenido del modal */
+.modal-content {
+    text-align: center;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+}
+
+/* Título del modal */
+.modal-content h2 {
+    font-size: 2rem;
+    color: #ffffff; /* Blanco puro */
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra para el texto */
+    margin-bottom: 15px;
+}
+
+/* Texto del mensaje */
+.modal-content p {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Mostrar el modal */
+.modal.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* Transición más suave */
+}
+
+/* Barra de pie de página */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    position: fixed;
+    bottom: 0;
+}
+
+/* Estilo para el puntaje y nivel */
+#score, #level {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    text-align: center;
+}
+
+/* Contenedor para puntaje y nivel */
+#score-container {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Botón dentro del modal */
+.modal-content .redirect-button {
+    padding: 12px 25px;
+    background-color: #0047ab; /* Azul profundo */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto hover en el botón */
+.modal-content .redirect-button:hover {
+    background-color: #003580; /* Azul más oscuro */
+    transform: scale(1.05); /* Aumento sutil */
+}
+
+/* Efecto de brillo del modal */
+@keyframes modal-glow {
+    0% {
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3), inset 0px 0px 10px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), inset 0px 0px 20px rgba(255, 255, 255, 0.3);
+    }
+}

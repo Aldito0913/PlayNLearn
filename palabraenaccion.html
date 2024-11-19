@@ -15,17 +15,21 @@
 
     <section class="game-container">
         <div class="situation">
-            <h2>¿Qué dirías si tienes hambre?</h2>
+            <h2 id="question">¿Qué dirías si tienes hambre?</h2>
         </div>
 
         <div class="options">
-            <button onclick="checkAnswer('correct')">¡Estoy muerto de hambre!</button>
-            <button onclick="checkAnswer('incorrect')">Tengo sed.</button>
-            <button onclick="checkAnswer('incorrect')">Voy a dormir.</button>
+            <button onclick="checkAnswer('¡Estoy muerto de hambre!')">¡Estoy muerto de hambre!</button>
+            <button onclick="checkAnswer('Tengo sed.')">Tengo sed.</button>
+            <button onclick="checkAnswer('Voy a dormir.')">Voy a dormir.</button>
         </div>
 
         <div id="feedback" class="feedback"></div>
 
+        <div class="score">
+            <p id="pointsDisplay">Puntos: 0</p>
+        </div>
+        
         <button id="nextButton" class="next-btn" onclick="nextQuestion()">Siguiente</button>
     </section>
 
@@ -39,3 +43,4 @@
     <a href="lenguaje.html" class="back-to-home">Volver al inicio</a>
 </body>
 </html>
+

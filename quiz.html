@@ -3,37 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Quiz interactivo sobre cultura salvadoreña para aprender de forma divertida.">
-    <title>Quiz de Cultura Salvadoreña</title>
-    <link rel="stylesheet" href="stylequiz.css">  <!-- Vinculamos el archivo CSS -->
+    <meta name="description" content="Lecciones de nuestra cultura para niños de 7 a 12 años de El Salvador">
+    <title>Nuestra cultura - Aprende Jugando</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #212529;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Pantalla informativa */
+        .intro-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro-video .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #0047ab;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .intro-video .close-btn:hover {
+            background-color: #003380;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 71, 171, 0.5);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        header {
+            background-color: #0047ab;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffc107;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            margin: 0;
+            padding: 10px;
+            background-color: #002366;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0047ab;
+            color: #ffc107;
+        }
+
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        video {
+            width: 80%;
+            border: 3px solid #0047ab;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .lesson {
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 2px solid #0047ab;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 70%;
+        }
+
+        .lesson:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #0047ab;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+            border-top: 3px solid #ffc107;
+        }
+
+        /* Estilos para los botones "Comenzar Juego" */
+        .start-button {
+            display: inline-block;
+            padding: 14px 24px;
+            background-color: #0047ab;
+            color: white;
+            font-size: 1.1em;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .start-button:hover {
+            background-color: #003380;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 71, 171, 0.3);
+        }
+
+        /* Estilo para resaltar el texto de ejemplo */
+        .highlight {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #ffc107; /* Color dorado */
+            background-color: #002366; /* Fondo oscuro */
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Pantalla introductoria con video -->
+    <div class="intro-video" id="introVideo">
+        <video autoplay muted id="introVideoElement">
+            <source src="imagenes/nuestra raiz_1.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos.
+        </video>
+        <button class="close-btn" id="closeIntro">Saltar</button>
+    </div>
+
     <header>
-        <h1>¡Divertido Quiz de Cultura Salvadoreña!</h1>
-        <p>¡Pon a prueba tus conocimientos mientras te diviertes!</p>
+        <h1>Nuestra cultura - Aprende Jugando</h1>
+        <p>Aprende más sobre la cultura salvadoreña con lecciones interactivas diseñadas para niños de 7 a 12 años en El Salvador.</p>
     </header>
 
-    <section>
-        <div class="quiz-container" id="quiz">
-            <h2 id="question-number">Pregunta 1:</h2>
-            <p id="question-text"></p>
-            <div id="answers"></div>
-            <p class="score" id="score-container">Puntuación: <span id="score">0</span></p>
-            <p class="feedback" id="feedback"></p>
-        </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+    </nav>
 
-        <!-- Botón de inicio -->
-        <div class="start-button-container">
-            <a href="index.html">
-                <button class="start-button">IR AL INICIO</button>
-            </a>
+    <section class="video-container">
+        <video controls autoplay>
+            <source src="imagenes/nuestra raiz_1.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos.
+        </video>
+    </section>
+
+    <section>
+        <h2>Lecciones de Nuestra Cultura</h2>
+        
+        <!-- Quiz nuestra cultura -->
+        <div class="lesson">
+            <img src="https://media.istockphoto.com/id/1186386668/es/vector/quiz-en-estilo-pop-art-c%C3%B3mico-quiz-palabra-de-juego-inteligente-dise%C3%B1o-de-ilustraci%C3%B3n.jpg?s=612x612&w=0&k=20&c=BawgBcBoYE9AmgDfM1t-aNg_nJFIV7fpRAEnTYwnT_Q=" alt="Quiz">
+            <h3>Lección 1: Quiz nuestra cultura</h3>
+            <p>En esta lección aprenderás mediante un quiz más sobre la cultura salvadoreña y qué es lo que más representa al país.</p>
+            <p><strong class="highlight">Ejemplo:</strong> ¿Cuál es el ave nacional de El Salvador? Respuesta: El Torogoz.</p>
+            <a href="quiznuestracultura.html" class="start-button">Comenzar Juego</a>
+        </div>
+        
+        <!-- Encuentra los pares nuestra cultura -->
+        <div class="lesson">
+            <img src="https://thumbs.dreamstime.com/b/gato-con-la-lupa-121547000.jpg" alt="Encuentra la pareja">
+            <h3>Lección 2: Encuentra los pares</h3>
+            <p>En esta lección te divertirás y conocerás algunos elementos emblemáticos sobre El Salvador.</p>
+            <p><strong class="highlight">Ejemplo:</strong> ¡Encuentra los pares!</p>
+            <a href="nivel2NuestraCultura.html" class="start-button">Comenzar Juego</a>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2024 Quiz de Cultura Salvadoreña - ¡Todos los derechos reservados!</p>
+        <p>&copy; 2024 Plataforma Educativa. Inspirada en los colores de El Salvador.</p>
     </footer>
 
-    <script src="quiz.js"></script> <!-- Vinculamos el archivo JS -->
+    <script>
+        const introVideo = document.getElementById("introVideo");
+        const introVideoElement = document.getElementById("introVideoElement");
+        const closeIntro = document.getElementById("closeIntro");
+
+        // Cierra la pantalla introductoria después de la reproducción del video
+        introVideoElement.addEventListener("ended", () => {
+            introVideo.classList.add("hidden");
+        });
+
+        // Permite al usuario cerrar el video antes de que termine
+        closeIntro.addEventListener("click", () => {
+            introVideo.classList.add("hidden");
+        });
+    </script>
 </body>
-</html>                                                                                                                                                                                                     
+</html>
+

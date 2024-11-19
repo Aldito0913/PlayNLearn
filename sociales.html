@@ -1,7 +1,174 @@
-<link rel="stylesheet" href="stylesociales.css">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juegos educativos de Sociales para niños de 7 a 12 años">
+    <title>Juegos de Sociales - Aprende Jugando</title>
+    <link rel="stylesheet" href="stylesociales.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #212529;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Pantalla informativa */
+        .intro-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .intro-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro-video .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #0047ab;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 10000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .intro-video .close-btn:hover {
+            background-color: #003380;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 71, 171, 0.5);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        header {
+            background-color: #0047ab;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffc107;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            margin: 0;
+            padding: 10px;
+            background-color: #002366;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #0047ab;
+            color: #ffc107;
+        }
+
+        .games-section {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border: 2px solid #0047ab;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .game-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-container h3 {
+            color: #0047ab;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0047ab;
+            color: white;
+            font-size: 1em;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .start-button:hover {
+            background-color: #003380;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 71, 171, 0.3);
+        }
+
+        footer {
+            background-color: #0047ab;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+            border-top: 3px solid #ffc107;
+        }
+    </style>
 </head>
 <body>
-<body>
+    <!-- Pantalla introductoria con video -->
+    <div class="intro-video" id="introVideo">
+        <video autoplay id="introVideoElement">
+            <source src="imagenes/sociales.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos.
+        </video>
+        <button class="close-btn" id="closeIntro">Saltar</button>
+    </div>
+
     <header>
         <h1>Juegos de Sociales para Niños</h1>
         <p>Aprende historia y geografía jugando, ¡diviértete mientras aprendes!</p>
@@ -10,34 +177,48 @@
     <nav>
         <a href="contacto.html">Contacto</a>
         <a href="quiz-sociales.html">Quiz Social</a>
-        <a href="juegosociales2.html">Personaje Historico</a>
-        <a href="socialesjuego3.html">Geográfia</a>
+        <a href="juegosociales2.html">Personaje Histórico</a>
+        <a href="socialesjuego3.html">Geografía</a>
     </nav>
 
     <div class="games-section">
-        <section>
-            <div class="game-container">
-                <h3>Lección 1: Quiz de sociales</h3>
-                <p>Desafíate en esta prueba de estudios sociales para ganar puntos.</p>
-                <a href="quiz-sociales.html" class="start-button">Comenzar Juego</a>
+        <div class="game-container">
+            <h3>Lección 1: Quiz de Sociales</h3>
+            <p>Desafíate en esta prueba de estudios sociales para ganar puntos.</p>
+            <a href="quiz-sociales.html" class="start-button">Comenzar Juego</a>
+        </div> 
+
+        <div class="game-container">
+            <h3>Lección 2: Adivina al Personaje</h3>
+            <p>Analiza y responde correctamente el personaje histórico para ganar puntos.</p>
+            <a href="juegosociales2.html" class="start-button">Comenzar Juego</a>
         </div>
 
-                <div class="game-container">
-                    <h3>Lección 2: Adivina al personaje</h3>
-                    <p>Analiza y responde correctamente el personaje historico para ganar puntos.</p>
-                    <a href="juegosociales2.html" class="start-button">Comenzar Juego</a>
-            </div>
-
-            <div class="game-container">
-                <h3>Lección 3: Prueba geográfica</h3>
-                <p>Pon a prueba tus conocimientos geográficas para ganar puntos.</p>
-                <a href="socialesjuego3.html" class="start-button">Comenzar Juego</a>
+        <div class="game-container">
+            <h3>Lección 3: Prueba Geográfica</h3>
+            <p>Pon a prueba tus conocimientos geográficos para ganar puntos.</p>
+            <a href="socialesjuego3.html" class="start-button">Comenzar Juego</a>
         </div>
-        </section>
     </div>
 
     <footer>
         <p>&copy; 2024 Juegos de Sociales - Todos los derechos reservados</p>
     </footer>
+
+    <script>
+        const introVideo = document.getElementById("introVideo");
+        const introVideoElement = document.getElementById("introVideoElement");
+        const closeIntro = document.getElementById("closeIntro");
+
+        // Cierra la pantalla introductoria después de la reproducción del video
+        introVideoElement.addEventListener("ended", () => {
+            introVideo.classList.add("hidden");
+        });
+
+        // Permite al usuario cerrar el video antes de que termine
+        closeIntro.addEventListener("click", () => {
+            introVideo.classList.add("hidden");
+        });
+    </script>
 </body>
 </html>

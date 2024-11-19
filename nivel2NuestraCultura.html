@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego Educativo</title>
+    <link rel="stylesheet" href="stylenvl2Nuestracultura.css">
+</head>
+<body>
+    <header>
+        <h1>Encuentra los pares de los símbolos patrios</h1>
+    </header>
+
+    <div class="game-container" id="game-container"></div>
+    <button id="next-level-btn" style="display: none;">Siguiente Nivel</button>
+    <button id="restart-btn" style="display: none;">Reiniciar Juego</button>
+    <div id="score">Puntos: 0</div>
+    <div id="level">Nivel: 1</div>
+
+  <!-- Modal de Felicitaciones -->
+<div id="congratulationsModal" class="modal">
+    <div class="modal-content">
+        <h2>¡Felicidades!</h2>
+        <p>Has completado el juego.</p>
+        <button id="redirect-btn" class="redirect-button">Regresar al Inicio</button>
+    </div>
+</div>
+
+    <script>
+        const pairs = [
+            ['https://i0.wp.com/goldservice.com.sv/wp-content/uploads/2016/05/ws_El_Salvador_Flag_1920x1200.jpg', 'https://i0.wp.com/goldservice.com.sv/wp-content/uploads/2016/05/ws_El_Salvador_Flag_1920x1200.jpg'],
+            ['https://cdn.pixabay.com/photo/2019/02/18/18/23/bird-4005017_960_720.jpg', 'https://cdn.pixabay.com/photo/2019/02/18/18/23/bird-4005017_960_720.jpg'],
+            ['https://mipatria.net/wp-content/uploads/2015/09/maquilishuat-arbol-nacional-de-el-salvador.jpg', 'https://mipatria.net/wp-content/uploads/2015/09/maquilishuat-arbol-nacional-de-el-salvador.jpg'],
+            ['https://www.cultura.gob.sv/wp-content/uploads/2023/08/FLOR-IZOTE-.jpg', 'https://www.cultura.gob.sv/wp-content/uploads/2023/08/FLOR-IZOTE-.jpg']
+        ];
+
+        let cardElements = [];
+        let firstCard = null;
+        let secondCard = null;
+        let lockBoard = false;
+        let matchedCards = 0;
+        let score = 0;
+        let level = 1;
+
+        const gameContainer = document.getElementById('game-container');
+        const nextLevelBtn = document.getElementById('next-level-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreDisplay = document.getElementById('score');
+        const levelDisplay = document.getElementById('level');
+        const congratulationsModal = document.getElementById('congratulationsModal');
+        const redirectBtn = document.getElementById('redirect-btn');
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+        function createCards() {
+            cardElements = [];
+            const selectedPairs = pairs.slice(0, Math.min(level, 4)); 
+            const allCards = selectedPairs.flat();
+            shuffle(allCards);
+
+            gameContainer.innerHTML = '';
+            allCards.forEach(image => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.image = image;
+
+                const img = document.createElement('img');
+                img.src = image;
+                img.alt = 'Imagen de pareja';
+                img.classList.add('hidden');
+
+                card.appendChild(img);
+                card.addEventListener('click', flipCard);
+                gameContainer.appendChild(card);
+                cardElements.push(card);
+            });
+        }
+
+        function flipCard() {
+            if (lockBoard || this === firstCard) return;
+
+            const img = this.querySelector('img');
+            img.classList.remove('hidden');
+
+            this.classList.add('flipped');
+
+            if (!firstCard) {
+                firstCard = this;
+                return;
+            }
+
+            secondCard = this;
+            lockBoard = true;
+
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            const isMatch = firstCard.dataset.image === secondCard.dataset.image;
+
+            if (isMatch) {
+                matchedCards += 2;
+                score += 10;
+                scoreDisplay.textContent = `Puntos: ${score}`;
+                resetBoard();
+
+                if (matchedCards === cardElements.length) {
+                    if (level === 4) {
+                        showCongratulationsModal();
+                    } else {
+                        nextLevelBtn.style.display = 'block';
+                    }
+                }
+            } else {
+                setTimeout(() => {
+                    firstCard.querySelector('img').classList.add('hidden');
+                    secondCard.querySelector('img').classList.add('hidden');
+                    resetBoard();
+                }, 1000);
+            }
+        }
+
+        function resetBoard() {
+            [firstCard, secondCard, lockBoard] = [null, null, false];
+        }
+
+        function levelUp() {
+            level++;
+            matchedCards = 0;
+            levelDisplay.textContent = `Nivel: ${level}`;
+            nextLevelBtn.style.display = 'none';
+            createCards();
+        }
+
+        function showCongratulationsModal() {
+    const congratulationsModal = document.getElementById('congratulationsModal');
+    congratulationsModal.classList.add('show'); // Añade la clase para mostrar el modal
+}
+if (level === 4) {
+    showCongratulationsModal();
+}
+
+        redirectBtn.addEventListener('click', () => {
+            window.location.href = 'quiz.html';
+        });
+
+        nextLevelBtn.addEventListener('click', levelUp);
+
+        restartBtn.addEventListener('click', () => {
+            matchedCards = 0;
+            score = 0;
+            level = 1;
+            scoreDisplay.textContent = `Puntos: ${score}`;
+            levelDisplay.textContent = `Nivel: ${level}`;
+            gameContainer.innerHTML = '';
+            restartBtn.style.display = 'none';
+            nextLevelBtn.style.display = 'none';
+            congratulationsModal.style.display = 'none';
+            createCards();
+        });
+
+        createCards();
+    </script>
+
+    <footer>
+        Juegos 2024, todos los derechos reservados
+    </footer>
+</body>
+</html>

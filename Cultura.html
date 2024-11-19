@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partículas Interactivas con Video</title>
+    <title>Partículas Interactivas con Videos</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #121212; /* Fondo oscuro */
+            background-color: #121212;
         }
 
         #particles-js {
@@ -18,7 +18,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Fondo detrás de todo */
+            z-index: -1;
         }
 
         .btn {
@@ -33,38 +33,43 @@
             font-size: 16px;
             cursor: pointer;
             box-shadow: 0px 5px 10px rgba(0, 255, 0, 0.3);
-            z-index: 10; /* Asegura que el botón esté encima */
+            z-index: 10;
         }
 
         .btn:hover {
             background-color: #008000;
         }
 
-        .video-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Cambiado a 3 columnas */
+            gap: 15px; /* Reducido el espacio entre videos */
+            padding: 15px;
+            width: 80%; /* Reducido el ancho total */
+            max-width: 900px; /* Reducido el ancho máximo */
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 5; /* Asegura que el video esté encima del fondo */
+            z-index: 5;
+            background-color: rgba(0, 0, 0, 0.3); /* Fondo semi-transparente */
+            border-radius: 15px;
+            backdrop-filter: blur(5px); /* Efecto de desenfoque */
         }
 
         .video-thumbnail {
             display: block;
             position: relative;
-            width: 90%; /* Ajusta el ancho del video */
-            max-width: 800px;
-            border-radius: 10px; /* Bordes redondeados */
+            width: 100%;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0px 15px 30px rgba(0, 255, 0, 0.5); /* Sombra */
+            box-shadow: 0px 8px 15px rgba(0, 255, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .video-thumbnail:hover {
-            transform: scale(1.05); /* Efecto de agrandamiento */
-            box-shadow: 0px 20px 40px rgba(0, 255, 0, 0.7); /* Sombra más pronunciada */
+            transform: scale(1.05);
+            box-shadow: 0px 12px 20px rgba(0, 255, 0, 0.5);
         }
 
         .video-thumbnail img {
@@ -77,8 +82,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
+            width: 40px; /* Reducido el tamaño del botón de play */
+            height: 40px;
             background-color: rgba(0, 0, 0, 0.7);
             border: 2px solid #00ff00;
             border-radius: 50%;
@@ -97,31 +102,72 @@
             display: block;
             width: 0;
             height: 0;
-            border-left: 15px solid #fff;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
+            border-left: 12px solid #fff; /* Reducido el tamaño del triángulo */
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        /* Ajuste para pantallas más pequeñas */
+        @media (max-width: 968px) {
+            .videos-grid {
+                grid-template-columns: repeat(2, 1fr);
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+                width: 85%;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
 <body>
-    <!-- Fondo de partículas -->
     <div id="particles-js"></div>
-
-    <!-- Botón para regresar al index -->
     <button class="btn" onclick="location.href='index.html'">Regresar al Inicio</button>
 
-    <!-- Contenedor del video -->
-    <div class="video-container">
+    <div class="videos-grid">
+        <!-- Video 1 -->
         <a href="https://youtu.be/dmB7VwHgOCs" target="_blank" class="video-thumbnail">
-            <img src="https://img.youtube.com/vi/dmB7VwHgOCs/hqdefault.jpg" alt="Ver Video">
+            <img src="https://img.youtube.com/vi/dmB7VwHgOCs/hqdefault.jpg" alt="Ver Video 1">
+            <div class="play-button"></div>
+        </a>
+        
+        <!-- Video 2 -->
+        <a href="https://youtu.be/d1WS1jmVxqg" target="_blank" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/d1WS1jmVxqg/hqdefault.jpg" alt="Ver Video 2">
+            <div class="play-button"></div>
+        </a>
+        
+        <!-- Video 3 -->
+        <a href="https://youtu.be/O27NeE3Mb-8" target="_blank" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/O27NeE3Mb-8/hqdefault.jpg" alt="Ver Video 3">
+            <div class="play-button"></div>
+        </a>
+        
+        <!-- Video 4 -->
+        <a href="https://youtu.be/DOyq_x32DPk" target="_blank" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/DOyq_x32DPk/hqdefault.jpg" alt="Ver Video 4">
+            <div class="play-button"></div>
+        </a>
+        
+        <!-- Video 5 -->
+        <a href="https://youtu.be/jvSFjUIfRwI" target="_blank" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/jvSFjUIfRwI/hqdefault.jpg" alt="Ver Video 5">
+            <div class="play-button"></div>
+        </a>
+        
+        <!-- Video 6 -->
+        <a href="https://youtu.be/L3ivK72Hk0Q" target="_blank" class="video-thumbnail">
+            <img src="https://img.youtube.com/vi/L3ivK72Hk0Q/hqdefault.jpg" alt="Ver Video 6">
             <div class="play-button"></div>
         </a>
     </div>
-    
 
     <script>
-        // Configuración de partículas
+        // Configuración de partículas (se mantiene igual)
         particlesJS('particles-js', {
             "particles": {
                 "number": {

@@ -249,3 +249,63 @@ header h1 {
 #redirect-btn:hover {
     background-color: #2b7a0b;
 }
+
+/* Contenedor de los puntos */
+.score {
+    background: #ff7e5f;
+    color: #fff;
+    font-size: 2em;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 30px; /* Asegura que los puntos estén debajo del juego */
+}
+
+/* Animación de los puntos al ganar */
+.score p {
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+/* Cambiar color cuando el usuario acierta */
+.score p.active {
+    color: #56ab2f;
+    transform: scale(1.1);
+}
+
+/* Mejorar el diseño de los puntos cuando cambia el puntaje */
+#score-display {
+    font-size: 2.5em;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Agregar un cambio de color cuando se actualiza el puntaje */
+#score-display.updated {
+    color: #fffd47;
+    transform: scale(1.3);
+}
+
+/* Contenedor de los puntos (ubicado debajo) */
+.score-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px; /* Asegura que esté debajo del juego */
+}
+
+.score {
+    margin-top: 20px; /* Espacio encima de los puntos */
+    padding: 10px; /* Espacio dentro del contenedor */
+    background-color: #ff7e05; /* Color de fondo para destacar los puntos */
+    border-radius: 5px; /* Bordes redondeados */
+    width: auto; /* Ajustar el ancho automáticamente */
+    text-align: center; /* Alinear el texto al centro */
+    font-size: 20px; /* Tamaño de fuente */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin-left: 20px; /* Dejar espacio a la izquierda para no estar pegado */
+}

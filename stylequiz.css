@@ -7,7 +7,7 @@ body {
     animation: fadeIn 1s ease-in-out;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura */
+    min-height: 100vh; /* Altura completa */
 }
 
 @keyframes fadeIn {
@@ -21,58 +21,81 @@ header {
     padding: 20px;
     text-align: center;
     border-bottom: 5px solid #ffd166; /* Amarillo brillante */
-    animation: bounceIn 0.5s ease;
     border-radius: 0 0 20px 20px;
-}
-
-@keyframes bounceIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
 }
 
 section {
     padding: 20px;
     text-align: center;
-    flex: 1; /* Hace que el contenido ocupe el espacio restante */
+    flex: 1;
 }
 
 .quiz-container {
     margin: 20px auto;
-    border: 5px dotted #3a86ff; /* Azul brillante */
+    border: 5px dotted #0047ab; /* Azul bandera */
     padding: 15px;
     border-radius: 15px;
-    background-color: #e8eaf6;
+    background-color: #e8eaf6; /* Fondo azul claro */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    animation: bounceIn 0.5s ease;
     max-width: 600px;
+    text-align: center; /* Centra el contenido dentro del contenedor */
+}
+
+/* Respuestas en formato de fila */
+.answer-button {
+    display: block; /* Fuerza a cada botón a ocupar toda la fila */
+    margin: 10px auto; /* Margen superior e inferior */
+    width: 80%; /* Ajusta el ancho del botón */
+    text-align: center; /* Centra el texto */
+}
+
+@keyframes bounceIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 footer {
-    background-color: #ffd166; /* Amarillo del Torogoz */
+    background-color: #ffd166; /* Amarillo */
     color: white;
     text-align: center;
-    padding: 10px 0;
-    position: absolute;
-    width: 100%;
-    bottom: 0; /* Fija el pie al fondo */
-    margin-top: 20px;
+    padding: 15px 0;
+    margin-top: auto; /* Asegura que el pie esté al final */
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    width: 100%;
+    position: relative;
 }
 
-button {
+/* Botones */
+button, a#return-button {
     padding: 15px 20px;
-    background: linear-gradient(135deg, #a0c4ff, #06d6a0, #ffd166, #3a86ff); /* Color de fondo en gradiente */
+    background: linear-gradient(135deg, #a0c4ff, #06d6a0, #ffd166, #3a86ff); /* Gradiente multicolor */
     color: #003049; /* Color del texto */
     border: none;
     border-radius: 30px;
+    font-size: 1em;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 1.2em;
     margin-top: 15px;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.2s ease-in-out;
-    width: 80%;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+    width: 50%;
     display: inline-block;
-    animation: pulse 1s infinite alternate; /* Efecto de pulsación */
+    animation: pulse 1.5s infinite alternate; /* Efecto de pulsación */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Centrado del botón */
+.return-button-container {
+    text-align: center; /* Centra el botón dentro del contenedor */
+    margin: 20px 0; /* Separación del contenido superior */
+}
+
+a#return-button {
+    display: block; /* Para ocupar toda la fila */
+    margin: 0 auto; /* Centra el botón horizontalmente */
+    width: 50%; /* Ajusta el ancho */
 }
 
 @keyframes pulse {
@@ -82,29 +105,30 @@ button {
     }
     100% {
         transform: scale(1.1);
-        box-shadow: 0 0 15px #ffd166, 0 0 25px #ffd166;
+        box-shadow: 0 0 20px #ffd166, 0 0 30px #ffd166;
     }
 }
 
-button:hover {
-    background: linear-gradient(135deg, #3a86ff, #06d6a0, #ffd166, #a0c4ff); /* Cambio dinámico al pasar el ratón */
-    color: #003049; /* Color del texto al hacer hover */
+button:hover, a#return-button:hover {
+    background: linear-gradient(135deg, #3a86ff, #ffd166, #06d6a0, #a0c4ff); /* Cambio dinámico */
     transform: scale(1.1);
-    box-shadow: 0 0 20px #ffd166; /* Resplandor al pasar el ratón */
+    box-shadow: 0 0 20px #ffd166;
 }
 
+/* Puntuación */
 .score {
-    font-size: 2em;
-    color: #003049; /* Color del Torogoz */
+    font-size: 1.5em;
+    color: #003049; /* Azul profundo */
     margin-top: 20px;
-    animation: fadeIn 2s ease-in-out;
 }
 
+/* Retroalimentación */
 .feedback {
     font-size: 1.2em;
-    color: #d32f2f;
+    font-weight: bold;
+    color: #d32f2f; /* Rojo vibrante */
     margin-top: 10px;
-    animation: slideUp 0.5s ease;
+    animation: slideUp 0.5s ease-in-out;
 }
 
 @keyframes slideUp {
@@ -112,78 +136,17 @@ button:hover {
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Responsive */
 @media (max-width: 600px) {
     header h1 {
-        font-size: 28px;
+        font-size: 1.5em;
     }
-    button {
-        font-size: 1em;
+    button, a#return-button {
+        font-size: 0.9em;
+        width: 80%; /* Adaptación a pantallas pequeñas */
     }
     .quiz-container {
         padding: 10px;
     }
 }
 
-.rotateIn {
-    animation: rotateIn 0.6s ease;
-}
-
-@keyframes rotateIn {
-    from { transform: rotate(-180deg); opacity: 0; }
-    to { transform: rotate(0); opacity: 1; }
-}
-
-/* Estilo para tarjetas de juego (si aplicas este código a tarjetas) */
-.game-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    margin: 10px;
-    transition: background 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-.game-card:nth-child(6):hover { 
-    background: linear-gradient(135deg, #a0c4ff, #06d6a0, #ffd166, #3a86ff); /* Efecto de gradiente */
-    color: #003049; /* Color de texto */
-    transform: scale(1.05); /* Aumento al pasar el ratón */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Efecto de sombra al hover */
-}
-/* Botón de inicio */
-.start-button-container {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.start-button {
-    padding: 20px 40px;
-    background: linear-gradient(135deg, #ff6b6b, #ffcc5c, #6bff87, #4c7a92); /* Colores brillantes y dinámicos */
-    color: #fff;
-    font-size: 1.5em;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    animation: pulseButton 1.5s infinite alternate; /* Pulsación constante */
-}
-
-.start-button:hover {
-    transform: scale(1.1); /* Aumenta de tamaño cuando el ratón pasa sobre él */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más grande al hacer hover */
-    background: linear-gradient(135deg, #4c7a92, #ff6b6b, #ffcc5c, #6bff87); /* Cambio de color al pasar el ratón */
-}
-
-@keyframes pulseButton {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    100% {
-        transform: scale(1.1);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    }
-}

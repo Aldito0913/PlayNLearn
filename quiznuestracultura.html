@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Nuestra Cultura</title>
+    <link rel="stylesheet" href="stylequiz.css"> <!-- Archivo CSS externo -->
+</head>
+<body>
+    <header>
+        <h1>Quiz Nuestra Cultura</h1>
+        <p>¡Aprende sobre la cultura salvadoreña con este quiz!</p>
+    </header>
+
+    <div class="quiz-container">
+        <div id="question-number"></div>
+        <div id="question-text"></div>
+        <div id="answers"></div>
+        <div id="feedback"></div>
+        <p>Puntuación: <span id="score">0</span></p>
+    </div>
+
+    <!-- Botón para regresar al inicio -->
+    <div class="return-button-container">
+        <a id="return-button" href="quiz.html" style="display: none;">Regresar al inicio</a>
+    </div>
+
+    <script>
+        // Datos de las preguntas y respuestas
+        const questions = [
+            { question: "¿Cuál es el ave nacional de El Salvador?", answers: ["El Torogoz", "El Quetzal", "El Águila Real"], correctAnswer: "El Torogoz" },
+            { question: "¿En qué año El Salvador obtuvo su independencia?", answers: ["1821", "1812", "1838"], correctAnswer: "1821" },
+            { question: "¿Cuál es la flor nacional de El Salvador?", answers: ["Tulipán", "La flor de izote", "Dalia roja"], correctAnswer: "La flor de izote" },
+            { question: "¿Cuál es el árbol nacional de El Salvador?", answers: ["Quebracho rojo", "Ceiba", "El maquilíshuat"], correctAnswer: "El maquilíshuat" },
+            { question: "¿Cuál es la capital de El Salvador?", answers: ["San José", "San Salvador", "Tegucigalpa"], correctAnswer: "San Salvador" },
+            { question: "¿Cuál es la moneda oficial de El Salvador?", answers: ["El Dólar estadounidense", "El peso", "El Colón"], correctAnswer: "El Dólar estadounidense" },
+            { question: "¿Cuál es el plato típico más representativo de El Salvador?", answers: ["Tacos", "Baleadas", "Pupusas"], correctAnswer: "Pupusas" },
+            { question: "¿Cuántos departamentos tiene El Salvador?", answers: ["10", "13", "14"], correctAnswer: "14" },
+            { question: "¿Qué colores tiene la bandera de El Salvador?", answers: ["Azul y blanco", "Rojo, amarillo y azul", "Verde y blanco"], correctAnswer: "Azul y blanco" },
+            { question: "¿En qué continente se encuentra El Salvador?", answers: ["Europa", "América", "Asia"], correctAnswer: "América" },
+            {question: "¿Cuál es el animal que aparece en el escudo de El Salvador?", answers: ["León", "Águila", "Ninguno"], correctAnswer: "Ninguno" },
+            {question: "¿Qué celebración es muy famosa en El Salvador en noviembre?", answers: ["Día de los difuntos", "Día de la independencia", "Navidad"], correctAnswer: "Día de los difuntos"},
+            {question: "¿Qué día se celebra el dia de la independencia en El Salvador?", answers: ["4 de Julio", "20 de Agosto", "15 de Septiembre"], correctAnswer: "15 de Septiembre"},
+            {question: "¿Qué país es conocido como 'el pulgarcito de América'?", answers: ["Colombia", "El Salvador", "Guatemala"], correctAnswer: "El Salvador"},
+            {question: "¿Qué moneda se utilizaba antes del Dólar en El Salvador?", answers: ["Libra", "Quetzal", "Colón"], correctAnswer: "Colón"},
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Mostrar la primera pregunta
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById("question-number").textContent = `Pregunta ${currentQuestionIndex + 1}:`;
+            document.getElementById("question-text").textContent = question.question;
+
+            const answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = "";
+            
+            question.answers.forEach(answer => {
+                const answerButton = document.createElement("button");
+                answerButton.textContent = answer;
+                answerButton.classList.add("answer-button");
+                answerButton.onclick = () => checkAnswer(answer);
+                answersDiv.appendChild(answerButton);
+            });
+        }
+
+        // Verificar la respuesta seleccionada
+        function checkAnswer(answer) {
+            const question = questions[currentQuestionIndex];
+            const feedback = document.getElementById("feedback");
+
+            if (answer === question.correctAnswer) {
+                score++;
+                feedback.textContent = "¡Correcto!";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = `Incorrecto. La respuesta correcta es: ${question.correctAnswer}`;
+                feedback.style.color = "red";
+            }
+
+            document.getElementById("score").textContent = score;
+
+            // Avanzar automáticamente a la siguiente pregunta después de 1 segundo
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion(); // Cargar la siguiente pregunta
+                    feedback.textContent = ""; // Limpiar el mensaje de retroalimentación
+                } else {
+                    // Finalizar el quiz
+                    feedback.textContent = `¡Has terminado! Tu puntuación final es ${score}.`;
+                    feedback.style.color = "blue";
+                    document.getElementById("return-button").style.display = "block"; // Mostrar el botón de regresar
+                }
+            }, 1000);
+        }
+
+        // Iniciar el quiz al cargar la página
+        window.onload = loadQuestion;
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Plataforma Educativa. Inspirada en los colores de El Salvador.</p>
+    </footer>
+</body>
+</html>
