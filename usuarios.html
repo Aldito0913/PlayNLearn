@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión y Progreso</title>
+    <title>Progreso de Asignaturas</title>
     <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="styleusuario.css">
     <style>
@@ -16,6 +16,7 @@
             background-size: 400% 400%;
             animation: backgroundAnimation 10s ease infinite;
             color: #333;
+            overflow: hidden;
         }
 
         @keyframes backgroundAnimation {
@@ -29,7 +30,13 @@
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin-top: 20px;
-            font-size: 26px;
+            font-size: 30px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .subjects-container {
@@ -43,10 +50,12 @@
         }
 
         .subject-title {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
             margin: 10px 0;
-            color: #3498db;
+            color: #e74c3c;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .progress-container {
@@ -75,65 +84,55 @@
             100% { width: inherit; }
         }
 
-        button {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 18px;
-            background: #ff6f61;
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        button:hover {
-            background: #ff3d2e;
-            transform: scale(1.05);
-        }
-
-        #activeUser {
+        .under-construction {
             text-align: center;
-            margin: 20px;
-            font-size: 18px;
-            color: #fff;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+            font-size: 28px;
+            color: #e67e22;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 30px;
+            animation: flash 1s linear infinite;
         }
 
-        #cursorEffect {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, #fbc2eb, #a6c1ee);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.8;
-            transform: scale(1);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        @keyframes flash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .under-construction span {
+            font-size: 30px;
+            color: #f39c12;
+            animation: bounce 0.5s infinite alternate;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
 
-        button:active {
-            animation: bounce 0.4s;
-        }
+       
+
     </style>
 </head>
-<body>
+<!-- Contenedor de botones -->
+<div class="button-container">
+    <button id="homeButton">Ir a Inicio</button>
+    <button id="logoutButton">Cerrar Sesión</button>
+</div>
 
-<!-- Usuario activo -->
-<div id="activeUser">Cargando usuario...</div>
+<body>
 
 <!-- Contenedor de progreso -->
 <div class="subjects-container">
     <h3>Progreso de Asignaturas</h3>
+
+    <!-- Mensaje de desarrollo en progreso -->
+    <div class="under-construction">
+        <span>¡Estamos trabajando en esto!</span>
+        <p>Este apartado aún está en construcción. ¡Pronto podrás ver más!</p>
+    </div>
+
     <div id="math">
         <p class="subject-title">Matemáticas</p>
         <div class="progress-container">
@@ -174,17 +173,6 @@
 <div id="cursorEffect"></div>
 
 <script>
-// Función para mostrar al usuario activo
-const activeUserDisplay = document.getElementById("activeUser");
-const userSession = localStorage.getItem("activeUser");
-
-if (userSession) {
-    const activeUser = JSON.parse(userSession);
-    activeUserDisplay.innerHTML = `<p><strong>Usuario:</strong> ${activeUser.username}</p><p><strong>Correo Electrónico:</strong> ${activeUser.email}</p>`;
-} else {
-    activeUserDisplay.textContent = "No hay un usuario activo.";
-}
-
 // Botón de inicio
 document.getElementById("homeButton").addEventListener("click", () => {
     window.location.href = "index.html";
@@ -192,7 +180,6 @@ document.getElementById("homeButton").addEventListener("click", () => {
 
 // Botón de cerrar sesión
 document.getElementById("logoutButton").addEventListener("click", () => {
-    localStorage.removeItem("activeUser");
     window.location.href = "login.html";
 });
 
@@ -215,4 +202,3 @@ document.addEventListener("mouseover", () => {
 
 </body>
 </html>
-

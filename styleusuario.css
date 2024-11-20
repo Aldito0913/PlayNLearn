@@ -3,14 +3,15 @@ body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
     background: linear-gradient(45deg, #ff6f61, #fce7f3, #3498db);
     background-size: 600% 600%;
-    animation: gradientBackground 10s ease infinite;
+    animation: gradientBackground 15s ease infinite;
     margin: 0;
     padding: 0;
     overflow: hidden;
     color: #fff;
+    height: 100vh;
 }
 
-/* Animación de fondo */
+/* Animación de fondo más suave */
 @keyframes gradientBackground {
     0% {
         background-position: 0% 50%;
@@ -26,15 +27,16 @@ body {
 /* Estilo para el cursor personalizado */
 #cursorEffect {
     position: absolute;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     background-color: #ffeb3b; /* Amarillo brillante */
     border-radius: 50%;
     pointer-events: none;
     transition: all 0.2s ease;
-    opacity: 0.8;
+    opacity: 0.9;
     transform: scale(1);
-    box-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.7);
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Estilo para las barras de progreso */
@@ -43,26 +45,31 @@ body {
     background-color: #f3f3f3;
     border-radius: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     position: relative;
 }
 
 .progress-bar {
-    height: 20px;
+    height: 25px;
     width: 0;
     background-color: #3498db;
     border-radius: 10px;
     text-align: center;
-    line-height: 20px;
+    line-height: 25px;
     color: white;
     font-weight: bold;
     transition: width 1s ease-out; /* Animación para el progreso */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar[data-progress] {
+    transition: width 1s ease-out;
 }
 
 /* Títulos de las asignaturas */
 .subject-title {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 10px;
     font-weight: bold;
     text-transform: uppercase;
@@ -70,30 +77,12 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+/* Contenedor de asignaturas */
 .subjects-container {
     margin-top: 30px;
     font-family: 'Comic Sans MS', cursive, sans-serif;
     animation: fadeIn 2s ease;
-}
-
-/* Botones con interacción divertida */
-button {
-    padding: 12px 20px;
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s ease;
-    font-size: 18px;
-    margin: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-button:hover {
-    background-color: #ff5722;
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
 }
 
 /* Animación para el texto de usuario */
@@ -108,42 +97,28 @@ button:hover {
     }
 }
 
-/* Interactividad para el contenedor de usuario */
-#activeUser {
-    margin-top: 20px;
+/* Botones con interacción divertida */
+button {
+    padding: 14px 22px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease, box-shadow 0.3s;
     font-size: 20px;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    color: #fff;
-    transition: all 0.3s ease;
+    margin: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
 }
 
-#activeUser p {
-    margin: 10px 0;
-    font-size: 18px;
+button:hover {
+    background-color: #ff5722;
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Efecto de "rebote" en botones */
 button:active {
     transform: scale(0.98);
-}
-
-/* Efecto de transición para el texto de usuario */
-#activeUser p:hover {
-    color: #ffeb3b;
-    text-decoration: underline;
-}
-
-/* Efecto de cursor animado */
-#cursorEffect {
-    transform: scale(1.5);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0.9;
-    box-shadow: 0 0 25px rgba(255, 235, 59, 0.8);
-}
-
-/* Fondo animado para el sitio */
-#activeUser {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Efecto de onda para el cursor al pasar por encima de los botones */
@@ -156,9 +131,125 @@ button:hover {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.1);
+        transform: scale(1.15);
     }
     100% {
         transform: scale(1);
     }
+}
+
+/* Transiciones de texto en los títulos */
+.subject-title:hover {
+    color: #ffeb3b;
+    text-decoration: underline;
+    text-shadow: 3px 3px 7px rgba(255, 235, 59, 0.8);
+}
+
+/* Estilo para contenedor de usuario */
+#activeUser {
+    margin-top: 40px;
+    font-size: 24px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    color: #fff;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#activeUser p {
+    margin: 12px 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Efecto de transición para el texto de usuario */
+#activeUser p:hover {
+    color: #ffeb3b;
+    text-decoration: underline;
+}
+
+/* Efecto de cursor animado */
+#cursorEffect {
+    transform: scale(1.8);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(255, 235, 59, 0.9);
+}
+
+/* Fondo animado para el sitio */
+#activeUser {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+/* Contenedor de progreso con efectos */
+.subjects-container div {
+    animation: scaleIn 1s ease;
+}
+
+/* Efecto de aparición gradual */
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Hover effect en barras de progreso */
+.progress-container:hover .progress-bar {
+    background-color: #1abc9c;
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.5);
+}
+
+/* Efectos de transición para las barras de progreso */
+.progress-bar[data-progress] {
+    width: var(--progress-width);
+    transition: width 1.5s ease-out;
+}
+
+/* Contenedor de botones */
+.button-container {
+    display: flex;
+    justify-content: center; /* Alinea los botones en el centro */
+    gap: 20px; /* Espacio entre los botones */
+    margin-top: 30px; /* Espacio superior */
+}
+
+/* Estilo de botones (sin cambios) */
+button {
+    display: block;
+    width: 220px;
+    padding: 15px 25px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #ff6f61, #ff3d2e);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ff3d2e, #ff6f61);
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #ff5722, #ff9e62);
+}
+
+/* Efecto de sombra suave */
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 93, 57, 0.6);
 }
